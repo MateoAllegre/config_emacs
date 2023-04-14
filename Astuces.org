@@ -1,109 +1,199 @@
-* Major mode
 
-** Codes de fonctionnement
-
-Touche de raccourcis
+* TODO Modif touche haut à gauche
 
 #+begin_src emacs-lisp
 
-  (defvar 
-    xah-fly-major-mode-key "i"
-    "Touche pour avoir les touches xah-fly-major-mode-map"
+  (define-key xah-fly-command-map (kbd (xah-fly--convert-kbd-str "'")) 'kill-word)
+
+  (define-key xah-fly-command-map (kbd (xah-fly--convert-kbd-str "p")) 'set-mark-command)
+
+  (define-key xah-fly-command-map (kbd (xah-fly--convert-kbd-str "y")) 'undo)
+
+  (define-key xah-fly-command-map (kbd (xah-fly--convert-kbd-str "f")) 'xah-pop-local-mark-ring)
+
+  (defun cp/xah-pop-global-mark-ring ()
+    "Move cursor to last mark position in another buffer."
+    (interactive)
+    (let ((current-buffer (current-buffer)))
+
+      ;; on va à un autre buffer
+      (while (equal current-buffer (current-buffer))
+        (pop-global-mark))
+
+      ;; si il y a un prefix-argument, on ferme l'ancien buffer
+      (when current-prefix-arg
+        (save-window-excursion
+
+          (switch-to-buffer current-buffer)
+          (xah-close-current-buffer)
+
+          )
+        )
+
+      ;;si on n'est pas dans un buffer utile, on passe au suivant
+      (when (not (xah-user-buffer-p))
+        (xah-next-user-buffer))))
+
+  (define-key xah-fly-command-map (kbd (xah-fly--convert-kbd-str "SPC f")) 'cp/xah-pop-global-mark-ring)
+
+#+end_src
+
+
+* Programmation littérale
+
+** Mettre une propriété 
+
+*** sur un block
+
+Normal
+ou
+org-babel-insert-header-argument
+
+#+begin_src emacs-lisp :nom-propriété value :tangle test/config.el 
+
+#+end_src
+
+*** Sur un heading 
+
+**** Exemple
+:PROPERTIES:
+:header-args: :results output
+:END:
+
+#+begin_src python
+print("Hello")
+#+end_src
+
+#+RESULTS:
+: Hello
+
+***** Ici ça marche aussi
+
+#+begin_src python
+print("Hello")
+#+end_src
+
+#+RESULTS:
+: Hello
+
+*** Sur tout le buffer
+
+Mettre en haut :
+#+PROPERTY: header-args    :results silent
+#+PROPERTY: header-args :noweb yes
+
+** Réutiliser un morceau de code
+
+*** UN morceau de code
+
+#+NAME: the-value
+#+begin_src emacs-lisp
+  (- 2 1)
+#+end_src
+
+#+begin_src emacs-lisp :noweb yes
+
+  <<the-value>>
+
+#+end_src
+
+Puis on peut mettre, dans une variable quelconque à exporter ailleur, la valeur !
+
+#+begin_src python :noweb yes :results output
+  mavar =  <<the-value()>>
+  print(mavar)
+#+end_src
+
+#+RESULTS:
+: 1
+
+Ce qui sera exporté sous la forme : 
+value = 1
+
+autre exemple
+
+#+begin_src emacs-lisp :noweb yes :tangle no
+  (setq test <<the-value()>>)
+#+end_src
+
+#+RESULTS:
+: 1
+
+*** Plusieurs morceau de code
+
+**** Exemple emacs lisp
+
+#+begin_src emacs-lisp :noweb yes :tangle test.el
+
+  (defun ma-fonction ()
+    "DOCSTRING"
+    (interactive)
+    <<test>>
     )
 
 #+end_src
 
+#+RESULTS:
+: ma-fonction
+
+***** Code 1
+
+#+begin_src emacs-lisp :noweb yes :noweb-ref test
+(message "hello 
+<<name>>
+" )
+#+end_src
+
+***** Code 2
+
+#+begin_src emacs-lisp :noweb-ref test
+(message "word")
+#+end_src
+
+***** Code 3
+
+#+name:name
 #+begin_src emacs-lisp
 
-  (defun xah-fly-keys-major-mode-change (&rest args)
-    (let ((xah-fly-major-mode-map (intern (concat "xah-fly-" (symbol-name major-mode) "-map"))))
-      (define-key xah-fly-command-map 
-
-        ;; todo mettre (kbd (xah-fly--convert-kbd-str xah-fly-major-mode-key)) pour pas à avoir à la calculer à chaque fois ?
-        (kbd (xah-fly--convert-kbd-str xah-fly-major-mode-key))
-
-        (if (fboundp xah-fly-major-mode-map)
-            xah-fly-major-mode-map
-          'xah-fly-keys-no-major-mode
-          ))))
-
-  (defun xah-fly-keys-no-major-mode ()
-    "Function to call when there is no keymap mode to this major"
-    (interactive)
-    (message "There is no custom keymap for the major mode  %s. You can do a pull
-            request" major-mode))
-
-  (if (>= emacs-major-version 28)
-      (add-to-list 'window-state-change-functions 'xah-fly-keys-major-mode-change)
-    (progn
-      (add-to-list 'window-buffer-change-functions #'xah-fly-keys-major-mode-change)
-      (add-to-list 'window-selection-change-functions #'xah-fly-keys-major-mode-change)
-      (add-hook 'window-selection-change-functions #'xah-fly-keys-major-mode-change)))
+coucou
 
 #+end_src
 
-** Tables des maps
+**** Exemple concret
 
-Respecter le nom xah-fly-MAJORMODENAME-MODE-map
+Ici toutes les requêtes
 
-*** Org-mode
+#+begin_src sql :noweb yes :tangle test/test.sql
 
-#+begin_src emacs-lisp
-
-  (xah-fly--define-keys
-   (define-prefix-command 'xah-fly-org-mode-map)
-   '(
-
-     ("SPC" . org-mode-babel-keymap)
-
-     ;; ("-" . "^") NOTE: this is a dead key
-     ("'" . org-table-create-or-convert-from-region)
-     ("," . org-mark-element)
-     ("." . org-todo)
-     (";" . org-toggle-narrow-to-subtree)
-     ;; ("/" . "x")
-
-     ;; ("[" . "=")
-     ;; ("]" . "%")
-
-     ;; ("=" . "ç")
-
-     ("a" . org-export-dispatch)
-     ;; ("b" . org-goto)
-     ("b" . consult-org-heading) ;; mieux
-     ("c" . org-insert-link)
-     ("L" . org-store-link)
-     ("d" . org-mode-keymap-movement)
-     ("e" . org-meta-return)
-     ;; ("E" . org-insert-todo-heading)
-     ("f" . org-roam-ref-add)
-     ("g" . org-roam-buffer-toggle)
-     ("h" . vulpea-insert)
-     ;; ("i" . ",")
-     ("j" . org-deadline)
-     ("k" . org-schedule)
-     ("l" . "cp-vulpea-buffer-tags-remove-BROUILLON")
-     ;; ("m" . org-insert-todo-heading)
-     ("n" . vulpea-tags-add)
-     ("o" . org-refile)
-     ("p" . org-set-tags-command)
-     ("q" . org-sort)
-     ("r" . vulpea-meta-add)
-     ("s" . citar-insert-citation)
-     ;; ("t" . vulpea-find-backlink)
-     ;; ("u" . org-capture-keymap) ;; TODO, mis dans SPC SPC
-     ;; ("u" . org-capture)  ;; TODO changer
-
-     ("v" . org-insert-todo-heading)
-     ;; ("v" . cp-vulpea-meta-fait-add)
-     ("w" . consult-org-roam-forward-links)
-     ("x" . org-time-stamp)
-     ;; ("y" . "b")
-     ;; ("z" . "v")
-     ))
+<<mon-exercice>>
 
 #+end_src
 
-*** C
+***** Les questions
+:PROPERTIES:
+:header-args: :noweb-ref mon-exercice
+:END:
 
-*** Etc
+****** Question 1
+
+#+begin_src sql 
+  SELECT * from machin
+#+end_src
+
+****** Question 2
+
+#+begin_src sql
+  SELECT * from truc
+#+end_src
+
+* Gérer sa config
+
+** Faire des remap
+
+Remplacer une fonction par une autre. =Ne change pas la place=
+
+#+begin_src emacs-lisp
+
+  (define-key xah-fly-command-map [remap isearch-forward] 'consult-line)
+
+#+end_src

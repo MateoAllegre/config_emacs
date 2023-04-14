@@ -1,0 +1,258 @@
+(use-package xah-fly-keys
+    :straight (xah-fly-keys
+               :type git
+               :host github
+               :repo "xahlee/xah-fly-keys")
+    :config
+    (require 'xah-fly-keys)
+    (xah-fly-keys-set-layout "optimot")
+    ;; (xah-fly-keys 1)
+)
+
+(setq initial-scratch-message nil)
+
+(defvaralias 'major-mode-for-buffer-scratch 'initial-major-mode)
+(setq major-mode-for-buffer-scratch 'org-mode)
+
+(use-package recentf
+  :config
+
+  (recentf-mode 1)
+  (setq recentf-max-menu-items 100)
+  (setq recentf-max-saved-items 100)
+
+  ;; fichier à exclure de recentf
+  ;; If you use recentf then you might find it convenient to exclude all of the files in the no-littering directories using something like the following.
+  (add-to-list 'recentf-exclude no-littering-var-directory)
+  (add-to-list 'recentf-exclude no-littering-etc-directory)
+  (add-to-list 'recentf-exclude "/tmp/") ;;pour emacs-everywhere notamment
+  ;; Exlcude the org-agenda files
+  ;; (they flood the recentf because dashboard always checks their content)
+  ;; (with-eval-after-load 'org ;;important
+  ;; (add-to-list 'recentf-exclude (org-agenda-files))
+  ;; )
+  )
+
+;; Persist history over Emacs restarts. Vertico sorts by history position.
+(use-package savehist
+  :init
+  (setq savehist-file (concat user-emacs-directory "var/savehist.el"))
+  :config
+  (setq history-length 200)
+  ;;List of additional variables to save.
+  (setq savehist-additional-variables '(kill-ring search-ring recentf-list))
+  (savehist-mode t)
+
+  ;; pour améliorer les perf ? voir avec Mathieu
+  (put 'minibuffer-history 'history-length 50)
+  (put 'evil-ex-history 'history-length 50)
+  (put 'kill-ring 'history-length 25)
+  )
+
+;;sauvegarde à tout les changement de fenêtre
+(defun xah-save-all-unsaved (&rest args)
+  "Save all unsaved files. no ask.
+        Version 2019-11-05"
+  (interactive)
+  (unless (string-equal (file-name-extension buffer-file-name) "gpg")
+    (save-some-buffers t))
+  )
+
+;; mis dans xfk-layer
+;; (defun cp/xah-fly-save-buffer-if-file-not-gpg ()
+;; "Save current buffer if it is a file."
+;; (interactive)
+;; (when (and (buffer-file-name) (not (string-equal (file-name-extension buffer-file-name) "gpg")))
+;; (save-buffer)))
+
+;; (add-to-list 'window-state-change-functions 'xah-save-all-unsaved)
+;; sauvegarde automatique avec command mode
+;; (add-hook 'xah-fly-command-mode-activate-hook 'cp/xah-fly-save-buffer-if-file-not-gpg)
+
+(setq make-backup-files t	  ; backup of a file the first time it is saved.
+      backup-by-copying t	  ; don't clobber symlinks
+      version-control t		  ; version numbers for backup files
+      delete-old-versions t	  ; delete excess backup files silently
+      delete-by-moving-to-trash t ; Put the deleted files in the trash
+      kept-old-versions 6 ; oldest versions to keep when a new numbered backup is made (default: 2)
+      kept-new-versions 9 ; newest versions to keep when a new numbered backup is made (default: 2)
+      auto-save-default t ; auto-save every buffer that visits a file into another file, not the original
+      auto-save-timeout 20 ; number of seconds idle time before auto-save (default: 30)
+      auto-save-interval 200 ; number of keystrokes between auto-saves (default: 300)
+      ;; auto-save-visited-file-name t ;; sauvegarde directement sur le fichier original
+      )
+
+;;fichier à ne pas copier dans les backups
+(setq auto-mode-alist
+      (append
+       (list
+        '("\\.\\(vcf\\|gpg\\)$" . sensitive-minor-mode))
+       auto-mode-alist))
+
+(fset 'yes-or-no-p 'y-or-n-p)
+
+(global-auto-revert-mode t)
+
+(setq revert-without-query '(".pdf"))
+
+(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+
+(delete-selection-mode t)
+
+(save-place-mode 1)
+
+(cd user-emacs-directory)
+
+(setq enable-recursive-minibuffers t)
+
+(use-package vertico
+
+  ;;charger les extensions de vertico
+  :load-path "straight/build/vertico/extensions"
+  :custom
+  (vertico-cycle t)
+  :custom-face
+  (vertico-current ((t (:background "#3a3f5a"))))
+  :config
+
+  ;; Prefix the current candidate with “» ”. From
+  ;; https://github.com/minad/vertico/wiki#prefix-current-candidate-with-arrow
+  (advice-add #'vertico--format-candidate :around
+              (lambda (orig cand prefix suffix index _start)
+                (setq cand (funcall orig cand prefix suffix index _start))
+                (concat
+                 (if (= vertico--index index)
+                     (propertize "» " 'face 'vertico-current)
+                   "  ")
+                 cand)))
+
+  ;;pour activer vertico directory (remonte d'un dossier à chaque fois, pratique ! )
+  (require 'vertico-directory)
+  ;; (define-key vertico-map [remap backward-kill-word] #'vertico-directory-up)
+  ;; (define-key vertico-map [remap xah-delete-backward-char-or-bracket-text] #'vertico-directory-up)
+  (define-key vertico-map [remap open-line] #'vertico-directory-up)
+  ;; (define-key vertico-map [remap delete-backward-char] #'vertico-directory-up)
+
+  ;; pour pouvoir jump à une entrée
+  ;; (define-key vertico-map [remap avy-goto-char] #'vertico-quick-jump)
+
+  (with-eval-after-load 'avy
+
+    (defun divide-list-in-two-equal-part (lst)
+      (let ((len (length lst)))
+        (list (seq-subseq lst 0 (/ len 2))
+              (seq-subseq lst (/ len 2)))))
+
+    (setq avy-keys-alist-two-part (divide-list-in-two-equal-part (mapconcat 'char-to-string '(?\ ?e ?u ?i ?a ?s ?t ?r ?n) "")))
+
+    ;; lorsqu'il y a une touche
+    (setq vertico-quick1 (car avy-keys-alist-two-part))
+    ;; deux touches
+    (setq vertico-quick2 (cadr avy-keys-alist-two-part))
+
+    (require 'vertico-quick)
+    (use-package vertico-quick
+      :straight nil
+      :after vertico
+      :custom (test 2)
+      :bind (:map vertico-map
+                  ("C-<return>" . vertico-quick-exit))))
+
+  (vertico-mode))
+
+(use-package marginalia
+  :after vertico
+  :custom
+  (marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light nil))
+  :init
+  (marginalia-mode)
+  )
+
+;; Complétation par candidats      
+;; Use the `orderless' completion style.
+;; Enable `partial-completion' for files to allow path expansion.
+;; You may prefer to use `initials' instead of `partial-completion'.
+(use-package orderless
+  :init
+
+  (setq completion-styles '(orderless)
+        completion-category-defaults nil
+        completion-category-overrides '((file (styles partial-completion))))
+  :config
+
+  (setq orderless-matching-styles
+        '(
+          orderless-regexp
+          ;; orderless-literal
+          orderless-initialism ;;très puissant
+          ;; orderless-prefixes ;; utile pour les commandes de temps en temps
+          ;; orderless-flex ;; sert à rien pour moi, donne même des candidats inutiles
+          ;; orderless-without-literal ;; à ne pas utiliser directement
+          ))
+
+(setq orderless-component-separator 'orderless-escapable-split-on-space)
+
+  ;;couleur avec company
+  (defun just-one-face (fn &rest args)
+    (let ((orderless-match-faces [completions-common-part]))
+      (apply fn args)))
+  (advice-add 'company-capf--candidates :around #'just-one-face))
+
+(require 'org-tempo)
+
+(add-to-list 'org-structure-template-alist '("sh" . "src sh"))
+(add-to-list 'org-structure-template-alist '("cd" . "src C"))
+(add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp\n\n"))
+(add-to-list 'org-structure-template-alist '("sc" . "src scheme"))
+(add-to-list 'org-structure-template-alist '("ts" . "src typescript"))
+(add-to-list 'org-structure-template-alist '("py" . "src python"))
+(add-to-list 'org-structure-template-alist '("yaml" . "src yaml"))
+(add-to-list 'org-structure-template-alist '("json" . "src json"))
+
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '(
+   ;; (ditaa      . t)
+   (C          . t)
+   (dot        . t)
+   (emacs-lisp . t)
+   ;; (scheme     . t)
+   ;; (gnuplot    . t)
+   ;; (haskell    . t)
+   (latex      . t)
+   ;; (js         . t)
+   ;; (ledger     . t)
+   ;; (matlab     . t)
+   ;; (ocaml      . t)
+   ;; (octave     . t)
+   ;; (plantuml   . t)
+   (python     . t)
+   ;; (R          . t)
+   ;; (ruby       . t)
+   ;; (screen     . nil)
+   ;; (scheme     . t)
+   (shell      . t)
+   (sql        . t)
+   (sqlite     . t)
+   (java     . t)
+   (js . t) ;;javascripts
+   ))
+
+(setq org-babel-python-command "python3")
+
+(setq org-confirm-babel-evaluate nil	  ;; for running code blocks
+      org-confirm-elisp-link-function nil ;; for elisp links
+      org-confirm-shell-link-function nil)  ;; for shell links
+
+(setq org-src-tab-acts-natively t)
+
+(setq org-src-fontify-natively t)
+
+(setq org-blank-before-new-entry
+      '((heading . t)
+        (plain-list-item . auto)))
+
+(defun reload-configuration-of-emacs()
+
+
+)

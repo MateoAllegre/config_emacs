@@ -1,0 +1,14 @@
+
+
+Décommenter ";; (xah-fly-keys 1)" dans .emacs.d/config.org
+
+
+Tutoriel ici : 
+http://xahlee.info/emacs/misc/xah-fly-keys_tutorial.html
+
+(se baser sur la place des touches, optimot pas dispo sur le site mais mais dispo sur emacs)
+
+Pour changer la configuration, changer le fichier "config.org", et soit :
+- appeler la commande "reload-configuration-of-emacs"
+- relancer emacs
+  

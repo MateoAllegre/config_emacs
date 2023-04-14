@@ -1,8 +1,10 @@
 ;;; -*- coding: utf-8; mode: lisp-data -*-
-(("c:/Users/mateo/AppData/Roaming/.emacs.d/"
-  (dired-filename . "c:/Users/mateo/AppData/Roaming/.emacs.d/Astuces.org"))
- ("c:/Users/mateo/AppData/Roaming/.emacs.d/Astuces.org" . 1178)
- ("c:/Users/mateo/AppData/Roaming/.emacs.d/config.org" . 22924)
+(("c:/Users/mateo/AppData/Roaming/.emacs.d/Astuces.org" . 58)
+ ("c:/Users/mateo/AppData/Roaming/.emacs.d/etc/"
+  (dired-filename . "c:/Users/mateo/AppData/Roaming/.emacs.d/etc/.."))
+ ("c:/Users/mateo/AppData/Roaming/.emacs.d/"
+  (dired-filename . "c:/Users/mateo/AppData/Roaming/.emacs.d/config.org"))
+ ("c:/Users/mateo/AppData/Roaming/.emacs.d/config.org" . 4829)
  ("c:/Users/mateo/Desktop/Travail/"
   (dired-filename . "c:/Users/mateo/Desktop/Travail/ZZ1 S1"))
  ("c:/Users/mateo/Desktop/Travail/ZZ1 S1/"

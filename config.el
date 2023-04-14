@@ -108,6 +108,29 @@
 
 (define-key xah-fly-command-map (kbd (xah-fly--convert-kbd-str "SPC f")) 'cp/xah-pop-global-mark-ring)
 
+(define-key xah-fly-command-map (kbd (xah-fly--convert-kbd-str "o")) 'ma-fonction)
+
+
+(defun ma-fonction ()
+  (interactive)
+  (if (or buffer-read-only
+      (string-equal major-mode "minibuffer-mode")
+      ;; (string-equal major-mode "org-agenda-mode")
+      ;; (string-equal major-mode "fundamental-mode")
+      )
+      (execute-kbd-macro (kbd "RET"))
+    (open-line 1)))
+
+(defun xah-save-all-unsaved ()
+  "Save all unsaved files. no ask.
+Version 2019-11-05"
+  (interactive)
+  (save-some-buffers t ))
+
+(if (version< emacs-version "27")
+    (add-hook 'focus-out-hook 'xah-save-all-unsaved)
+  (setq after-focus-change-function 'xah-save-all-unsaved))
+
 (use-package which-key
     ;; :diminish which-key-mode
     :config

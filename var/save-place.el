@@ -1,17 +1,23 @@
 ;;; -*- coding: utf-8; mode: lisp-data -*-
-(("c:/Users/mateo/Desktop/"
-  (dired-filename . "c:/Users/mateo/Desktop/Olympus.lnk"))
+(("c:/Users/mateo/Desktop/Travail/"
+  (dired-filename . "c:/Users/mateo/Desktop/Travail/ZZ1 S1"))
+ ("c:/Users/mateo/Desktop/Travail/ZZ1 S1/"
+  (dired-filename . "c:/Users/mateo/Desktop/Travail/ZZ1 S1/C"))
+ ("c:/Users/mateo/Desktop/Travail/ZZ1 S1/C/"
+  (dired-filename . "c:/Users/mateo/Desktop/Travail/ZZ1 S1/C/test"))
+ ("c:/Users/mateo/Desktop/Travail/ZZ1 S1/C/test/"
+  (dired-filename . "c:/Users/mateo/Desktop/Travail/ZZ1 S1/C/test/main.c"))
+ ("c:/Users/mateo/Desktop/Travail/ZZ1 S1/C/test/main.c" . 257)
+ ("c:/Users/mateo/Desktop/"
+  (dired-filename . "c:/Users/mateo/Desktop/emacs"))
+ ("c:/Users/mateo/Desktop/emacs/"
+  (dired-filename . "c:/Users/mateo/Desktop/emacs/."))
  ("c:/Users/mateo/AppData/Roaming/.emacs.d/"
   (dired-filename . "c:/Users/mateo/AppData/Roaming/.emacs.d/config.org"))
- ("c:/Users/mateo/AppData/Roaming/.emacs.d/config.org" . 16987)
- ("c:/Users/mateo/AppData/Roaming/.emacs.d/var/bookmark-default.el" . 251)
+ ("c:/Users/mateo/AppData/Roaming/.emacs.d/config.org" . 3426)
  ("c:/Users/mateo/AppData/Roaming/.emacs.d/straight/build/expand-region/expand-region-autoloads.el" . 9740)
  ("c:/Users/mateo/AppData/Roaming/.emacs.d/straight/build/xah-fly-keys-layer/xah-fly-keys-layer-autoloads.el" . 1841)
  ("c:/Users/mateo/AppData/Roaming/.emacs.d/straight/build/avy/avy-autoloads.el" . 8687)
- ("c:/Users/mateo/Desktop/Travail/"
-  (dired-filename . "c:/Users/mateo/Desktop/Travail/ZZ1 S1"))
- ("c:/Users/mateo/Desktop/Travail/ZZ1 S1/"
-  (dired-filename . "c:/Users/mateo/Desktop/Travail/ZZ1 S1/bdd"))
  ("c:/Users/mateo/Desktop/Travail/ZZ1 S1/bdd/"
   (dired-filename . "c:/Users/mateo/Desktop/Travail/ZZ1 S1/bdd/BDFacturation_queries2.sql"))
  ("c:/Users/mateo/Desktop/Travail/ZZ1 S1/bdd/BDFacturation_queries2.sql" . 6862)

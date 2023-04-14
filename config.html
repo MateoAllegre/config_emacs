@@ -1,0 +1,1174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2023-04-14 ven. 18:36 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>&lrm;</title>
+<meta name="generator" content="Org Mode" />
+<style>
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+</head>
+<body>
+<div id="content" class="content">
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org3fb9988">1. Raccourcis</a>
+<ul>
+<li><a href="#org7e9fdb3">1.1. Moteur principal</a></li>
+<li><a href="#orge4f785b">1.2. Compter le nombre de chaque commande faite (bien pour optimiser les raccourcis)</a></li>
+<li><a href="#org58d2713">1.3. Mode par defaut apres certaines commandes</a></li>
+<li><a href="#orge4866be">1.4. Remap de certaines touches</a></li>
+</ul>
+</li>
+<li><a href="#org640d283">2. Voir les commandes</a></li>
+<li><a href="#org953f00f">3. Search avec caracteres</a></li>
+<li><a href="#orgbcda3c9">4. fermeture automatique des parentheses</a></li>
+<li><a href="#org56f2edc">5. opti cmd de base</a></li>
+<li><a href="#orgf63e260">6. Rafraichit automatiquement les buffers, sauf si ya eu des moddif évidemment</a></li>
+<li><a href="#orgba7bbca">7. Variable and mode built-in</a>
+<ul>
+<li><a href="#org504bdbb">7.1. Gestion du buffer scratch</a>
+<ul>
+<li><a href="#orge8a866a">7.1.1. Message de base à nil</a></li>
+<li><a href="#org4fa01bb">7.1.2. Mode de base dans scratch</a></li>
+</ul>
+</li>
+<li><a href="#orgfd6c683">7.2. Fichiers récents sauvegardé</a></li>
+<li><a href="#org1e1d95e">7.3. Dernière commandes proposé</a></li>
+<li><a href="#orgf941eab">7.4. Gestion des sauvegardes (fichiers dégeulasse), et fichiers à ne pas mettre dans les backups</a></li>
+<li><a href="#org4860493">7.5. Permet de r y ou n au lieu de yes ou no</a></li>
+<li><a href="#org5389c6c">7.6. Rafraichit automatiquement les buffers, sauf si ya eu des moddif évidemment</a></li>
+<li><a href="#orgb6e0f0c">7.7. Ne demande pas de confirme pour certains revert</a></li>
+<li><a href="#org6128c27">7.8. Échap marche en une fois</a></li>
+<li><a href="#org87c669b">7.9. Réécriture/remplacement lors de texte sélectionné</a></li>
+<li><a href="#org22c9adf">7.10. Sauvegarde la place du curseur dans les fichiers (marche sans no-litteralling)</a></li>
+<li><a href="#org6495188">7.11. Dossier de base dans .emacs.d quand on fait un find file</a></li>
+</ul>
+</li>
+<li><a href="#org39aa144">8. Minibuffer</a>
+<ul>
+<li><a href="#org6547fc3">8.1. Other</a>
+<ul>
+<li><a href="#org9ff8292">8.1.1. Pour faire des commandes dans le mini-buffer</a></li>
+</ul>
+</li>
+<li><a href="#org89aa5de">8.2. Vertico</a></li>
+<li><a href="#org585635f">8.3. Marginalia</a></li>
+<li><a href="#orgfb95701">8.4. Orderless</a></li>
+</ul>
+</li>
+<li><a href="#orgc8bac7c">9. Org-mode</a>
+<ul>
+<li><a href="#org1b8776c">9.1. Pour coder dans org (org-babel)</a>
+<ul>
+<li><a href="#org47c1c73">9.1.1. Template avec "&lt;" activer</a></li>
+<li><a href="#org1d04c17">9.1.2. Les langages chargé par org-babel</a></li>
+<li><a href="#org85e0fe2">9.1.3. Annulation de la demande de confirmation lors de la demande d'évaluation du code (babel, elisp-link, shell link)</a></li>
+<li><a href="#orge118921">9.1.4. Indente le code selon le language</a></li>
+</ul>
+</li>
+<li><a href="#org93d76fc">9.2. Laisser une ligne vide entre les heading org-mode lors de M-RET</a></li>
+</ul>
+</li>
+<li><a href="#org9d46df8">10. Fonction personnelle</a>
+<ul>
+<li><a href="#org7d9f25e">10.1. Recharger la configuration d'emacs</a></li>
+</ul>
+</li>
+<li><a href="#orgd8c76bf">11. Major mode</a>
+<ul>
+<li><a href="#org8dc5dde">11.1. Codes de fonctionnement</a></li>
+<li><a href="#orgc6119d6">11.2. Tables des maps</a>
+<ul>
+<li><a href="#org5da7929">11.2.1. Org-mode</a></li>
+<li><a href="#orgebcc36c">11.2.2. C</a></li>
+<li><a href="#org5f0a404">11.2.3. Etc</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org3fb9988" class="outline-2">
+<h2 id="org3fb9988"><span class="section-number-2">1.</span> Raccourcis</h2>
+<div class="outline-text-2" id="text-1">
+</div>
+<div id="outline-container-org7e9fdb3" class="outline-3">
+<h3 id="org7e9fdb3"><span class="section-number-3">1.1.</span> Moteur principal</h3>
+<div class="outline-text-3" id="text-1-1">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">
+    (use-package xah-fly-keys
+      :straight (xah-fly-keys
+		 :type git
+		 :host github
+		 :repo "xahlee/xah-fly-keys")
+      :config
+      (require 'xah-fly-keys)
+      (xah-fly-keys-set-layout "optimot")
+      (xah-fly-keys 1)
+  )
+
+(global-set-key (kbd "&lt;home&gt;") 'xah-fly-mode-toggle)
+
+</pre>
+</div>
+</div>
+</div>
+
+
+
+<div id="outline-container-orge4f785b" class="outline-3">
+<h3 id="orge4f785b"><span class="section-number-3">1.2.</span> Compter le nombre de chaque commande faite (bien pour optimiser les raccourcis)</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+keyfreq-show pour voir le nombre de commandes
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(use-package keyfreq
+  :config
+  ;;   Pour exclure des commandes
+  (setq keyfreq-excluded-commands
+	'(
+	  mouse-drag-region
+	  lsp-ui-doc--handle-mouse-movement
+	  mouse-set-point
+	  mwheel-scroll
+	  ))
+  (setq keyfreq-buffer "*keyfreq-buffer*")
+  (keyfreq-mode 1)
+  (keyfreq-autosave-mode 1))
+
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org58d2713" class="outline-3">
+<h3 id="org58d2713"><span class="section-number-3">1.3.</span> Mode par defaut apres certaines commandes</h3>
+<div class="outline-text-3" id="text-1-3">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">
+(use-package xah-fly-keys-layer
+    :after xah-fly-keys
+    :straight (xah-fly-keys-layer
+	       :type git
+	       :host github
+	       :repo "Cletip/xah-fly-keys-layer")
+
+    :config
+
+    ;; change variable before require the extension
+    (setq xah-fly-keys-layer-auto-command-mode
+	  '(recentf-cancel-dialog
+	    dashboard-jump-to-bookmarks
+	    org-agenda-show-dashboard
+	    dired-jump
+	    vertico-exit
+	    ace-link-eww
+	    debugger-quit
+	    ))
+    (setq xah-fly-keys-layer-auto-insert-mode
+	  '(
+	    execute-extended-command-for-buffer
+	    org-meta-return
+	    org-insert-heading-respect-content
+	    org-insert-link
+	    recentf-open-files
+	    ;; org-capture ;; désactivé car fait bugguer !
+	    ))
+    (require 'xah-fly-keys-layer-auto-mode))
+
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge4866be" class="outline-3">
+<h3 id="orge4866be"><span class="section-number-3">1.4.</span> Remap de certaines touches</h3>
+<div class="outline-text-3" id="text-1-4">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">
+  ;;for all other extensions, you can change variable after require the extension
+
+      (require 'xah-fly-keys-layer-better-remap)
+
+(use-package expand-region)
+
+      (setq xah-fly-keys-layer-isearch-forward-variable 'consult-line
+	    ;; xah-fly-keys-layer-ispell-word-variable 'flyspell-correct-wrapper
+	    xah-fly-keys-layer-xah-extend-selection-variable 'er/expand-region
+	    ;; xah-fly-keys-layer-xah-open-file-at-cursor-variable 'cp/open-link
+	    xah-fly-keys-layer-recentf-open-files-variable 'consult-recent-file
+	    ;; since I don't use save-buffer, I prefer this
+	    ;; xah-fly-keys-layer-save-buffer-variable 'avy-goto-char-2
+	    ;; xah-fly-keys-layer-describe-function-variable 'helpful-symbol
+  ;; 	  xah-fly-keys-layer-describe-variable-variable 'helpful-at-point)
+	    )
+					  ; 
+  ;; (xah-fly-keys-layer-add-keys-to-keymap 'xah-fly-command-map "i"
+					     ;; 'avy-goto-char-2)
+
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org640d283" class="outline-2">
+<h2 id="org640d283"><span class="section-number-2">2.</span> Voir les commandes</h2>
+<div class="outline-text-2" id="text-2">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">
+
+(use-package which-key
+    ;; :diminish which-key-mode
+    :config
+    ;;activer which-key
+    (which-key-mode)
+    ;;temps avant déclenchement de wich-key minimum
+    (setq which-key-idle-delay 0.01)
+    ;; affichage sur le côté, mais si marche pas en bas
+    (which-key-setup-side-window-right-bottom)
+    (setq which-key-frame-max-height 100)
+    (setq which-key-min-display-lines 1000))
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org953f00f" class="outline-2">
+<h2 id="org953f00f"><span class="section-number-2">3.</span> Search avec caracteres</h2>
+<div class="outline-text-2" id="text-3">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">
+(use-package avy
+    ;;\ pour l'espace
+    :custom
+    ;;personnalition des touches, important
+    ;; (avy-keys '(?a ?u ?e ?i ?t ?s ?r ?n ?\ ?\^M)) ;;^M=enter
+    ;; todo adapter à xah-fly-key !
+    (avy-keys '(?\ ?e ?u ?i ?a ?s ?t ?r ?. ?c))
+    (avy-background t)
+    ;;nouvelle touches pour escape avy go timer
+    (avy-escape-chars '(?\e ?\M-g))
+    :config
+    (setq avy-timeout-seconds 0.25)
+
+    ;; pour que ça marche sur toutse les fenêtres
+    (setq avy-all-windows 'all-frames)
+
+    ;;personnaliser chaque commande :
+    ;; (setq avy-keys-alist
+    ;; `((avy-goto-char . ,(number-sequence ?a ?f))
+    ;; (avy-goto-word-1 . (?f ?g ?h ?j))))
+
+    (defun avy-goto-char-timer-end (&amp;optional arg)
+      "Read one or many consecutive chars and jump to the last one.
+  The window scope is determined by `avy-all-windows' (ARG negates it)."
+      (interactive "P")
+      (avy-goto-char-timer arg)
+      (forward-char (length avy-text))))
+
+</pre>
+</div>
+</div>
+</div>
+
+
+
+<div id="outline-container-orgbcda3c9" class="outline-2">
+<h2 id="orgbcda3c9"><span class="section-number-2">4.</span> fermeture automatique des parentheses</h2>
+<div class="outline-text-2" id="text-4">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(electric-pair-mode 1)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org56f2edc" class="outline-2">
+<h2 id="org56f2edc"><span class="section-number-2">5.</span> opti cmd de base</h2>
+<div class="outline-text-2" id="text-5">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">
+(use-package consult)
+
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgf63e260" class="outline-2">
+<h2 id="orgf63e260"><span class="section-number-2">6.</span> Rafraichit automatiquement les buffers, sauf si ya eu des moddif évidemment</h2>
+<div class="outline-text-2" id="text-6">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">
+(global-auto-revert-mode t)
+;; on veut plus voir quand un buffer est revert
+;; (setq auto-revert-verbose nil)
+
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgba7bbca" class="outline-2">
+<h2 id="orgba7bbca"><span class="section-number-2">7.</span> Variable and mode built-in</h2>
+<div class="outline-text-2" id="text-7">
+</div>
+<div id="outline-container-org504bdbb" class="outline-3">
+<h3 id="org504bdbb"><span class="section-number-3">7.1.</span> Gestion du buffer scratch</h3>
+<div class="outline-text-3" id="text-7-1">
+</div>
+<div id="outline-container-orge8a866a" class="outline-4">
+<h4 id="orge8a866a"><span class="section-number-4">7.1.1.</span> Message de base à nil</h4>
+<div class="outline-text-4" id="text-7-1-1">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(setq initial-scratch-message "Buffer scratch en org-mode !")
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4fa01bb" class="outline-4">
+<h4 id="org4fa01bb"><span class="section-number-4">7.1.2.</span> Mode de base dans scratch</h4>
+<div class="outline-text-4" id="text-7-1-2">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(defvaralias 'major-mode-for-buffer-scratch 'initial-major-mode)
+(setq major-mode-for-buffer-scratch 'org-mode)
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgfd6c683" class="outline-3">
+<h3 id="orgfd6c683"><span class="section-number-3">7.2.</span> Fichiers récents sauvegardé</h3>
+<div class="outline-text-3" id="text-7-2">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">
+(use-package recentf
+  :config
+
+  (recentf-mode 1)
+  (setq recentf-max-menu-items 100)
+  (setq recentf-max-saved-items 100)
+
+  ;; fichier à exclure de recentf
+  ;; If you use recentf then you might find it convenient to exclude all of the files in the no-littering directories using something like the following.
+  (add-to-list 'recentf-exclude no-littering-var-directory)
+  (add-to-list 'recentf-exclude no-littering-etc-directory)
+  (add-to-list 'recentf-exclude "/tmp/") ;;pour emacs-everywhere notamment
+  ;; Exlcude the org-agenda files
+  ;; (they flood the recentf because dashboard always checks their content)
+  ;; (with-eval-after-load 'org ;;important
+  ;; (add-to-list 'recentf-exclude (org-agenda-files))
+  ;; )
+  )
+
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1e1d95e" class="outline-3">
+<h3 id="org1e1d95e"><span class="section-number-3">7.3.</span> Dernière commandes proposé</h3>
+<div class="outline-text-3" id="text-7-3">
+<p>
+Cela permet de ré-avoir les commandes faites lors de la dernière session d'emacs.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">
+;; Persist history over Emacs restarts. Vertico sorts by history position.
+(use-package savehist
+  :init
+  (setq savehist-file (concat user-emacs-directory "var/savehist.el"))
+  :config
+  (setq history-length 200)
+  ;;List of additional variables to save.
+  (setq savehist-additional-variables '(kill-ring search-ring recentf-list))
+  (savehist-mode t)
+
+  ;; pour améliorer les perf ? voir avec Mathieu
+  (put 'minibuffer-history 'history-length 50)
+  (put 'evil-ex-history 'history-length 50)
+  (put 'kill-ring 'history-length 25)
+  )
+
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgf941eab" class="outline-3">
+<h3 id="orgf941eab"><span class="section-number-3">7.4.</span> Gestion des sauvegardes (fichiers dégeulasse), et fichiers à ne pas mettre dans les backups</h3>
+<div class="outline-text-3" id="text-7-4">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">
+;;sauvegarde à tout les changement de fenêtre
+(defun xah-save-all-unsaved (&amp;rest args)
+  "Save all unsaved files. no ask.
+	Version 2019-11-05"
+  (interactive)
+  (unless (string-equal (file-name-extension buffer-file-name) "gpg")
+    (save-some-buffers t))
+  )
+
+;; mis dans xfk-layer
+;; (defun cp/xah-fly-save-buffer-if-file-not-gpg ()
+;; "Save current buffer if it is a file."
+;; (interactive)
+;; (when (and (buffer-file-name) (not (string-equal (file-name-extension buffer-file-name) "gpg")))
+;; (save-buffer)))
+
+;; (add-to-list 'window-state-change-functions 'xah-save-all-unsaved)
+;; sauvegarde automatique avec command mode
+;; (add-hook 'xah-fly-command-mode-activate-hook 'cp/xah-fly-save-buffer-if-file-not-gpg)
+
+(setq make-backup-files t	  ; backup of a file the first time it is saved.
+      backup-by-copying t	  ; don't clobber symlinks
+      version-control t		  ; version numbers for backup files
+      delete-old-versions t	  ; delete excess backup files silently
+      delete-by-moving-to-trash t ; Put the deleted files in the trash
+      kept-old-versions 6 ; oldest versions to keep when a new numbered backup is made (default: 2)
+      kept-new-versions 9 ; newest versions to keep when a new numbered backup is made (default: 2)
+      auto-save-default t ; auto-save every buffer that visits a file into another file, not the original
+      auto-save-timeout 20 ; number of seconds idle time before auto-save (default: 30)
+      auto-save-interval 200 ; number of keystrokes between auto-saves (default: 300)
+      ;; auto-save-visited-file-name t ;; sauvegarde directement sur le fichier original
+      )
+
+;;fichier à ne pas copier dans les backups
+(setq auto-mode-alist
+      (append
+       (list
+	'("\\.\\(vcf\\|gpg\\)$" . sensitive-minor-mode))
+       auto-mode-alist))
+
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org4860493" class="outline-3">
+<h3 id="org4860493"><span class="section-number-3">7.5.</span> Permet de r y ou n au lieu de yes ou no</h3>
+<div class="outline-text-3" id="text-7-5">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">
+(fset 'yes-or-no-p 'y-or-n-p)
+
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org5389c6c" class="outline-3">
+<h3 id="org5389c6c"><span class="section-number-3">7.6.</span> Rafraichit automatiquement les buffers, sauf si ya eu des moddif évidemment</h3>
+<div class="outline-text-3" id="text-7-6">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">
+(global-auto-revert-mode t)
+
+
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb6e0f0c" class="outline-3">
+<h3 id="orgb6e0f0c"><span class="section-number-3">7.7.</span> Ne demande pas de confirme pour certains revert</h3>
+<div class="outline-text-3" id="text-7-7">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(setq revert-without-query '(".pdf"))
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6128c27" class="outline-3">
+<h3 id="org6128c27"><span class="section-number-3">7.8.</span> Échap marche en une fois</h3>
+<div class="outline-text-3" id="text-7-8">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">
+(global-set-key (kbd "&lt;escape&gt;") 'keyboard-escape-quit)
+
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org87c669b" class="outline-3">
+<h3 id="org87c669b"><span class="section-number-3">7.9.</span> Réécriture/remplacement lors de texte sélectionné</h3>
+<div class="outline-text-3" id="text-7-9">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">
+(delete-selection-mode t)
+
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org22c9adf" class="outline-3">
+<h3 id="org22c9adf"><span class="section-number-3">7.10.</span> Sauvegarde la place du curseur dans les fichiers (marche sans no-litteralling)</h3>
+<div class="outline-text-3" id="text-7-10">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">
+(save-place-mode 1)
+
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6495188" class="outline-3">
+<h3 id="org6495188"><span class="section-number-3">7.11.</span> Dossier de base dans .emacs.d quand on fait un find file</h3>
+<div class="outline-text-3" id="text-7-11">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(cd user-emacs-directory)
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org39aa144" class="outline-2">
+<h2 id="org39aa144"><span class="section-number-2">8.</span> Minibuffer</h2>
+<div class="outline-text-2" id="text-8">
+<p>
+<a href="https://github.com/minad/vertico">Vertico</a> and friends provides a minimalistic vertical completion UI, which is based on the default completion system.
+</p>
+</div>
+<div id="outline-container-org6547fc3" class="outline-3">
+<h3 id="org6547fc3"><span class="section-number-3">8.1.</span> Other</h3>
+<div class="outline-text-3" id="text-8-1">
+</div>
+<div id="outline-container-org9ff8292" class="outline-4">
+<h4 id="org9ff8292"><span class="section-number-4">8.1.1.</span> Pour faire des commandes dans le mini-buffer</h4>
+<div class="outline-text-4" id="text-8-1-1">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">
+(setq enable-recursive-minibuffers t)
+
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org89aa5de" class="outline-3">
+<h3 id="org89aa5de"><span class="section-number-3">8.2.</span> Vertico</h3>
+<div class="outline-text-3" id="text-8-2">
+<p>
+Vertico provides a minimalistic vertical completion UI, which is based on the default completion system
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">
+(use-package vertico
+
+  ;;charger les extensions de vertico
+  :load-path "straight/build/vertico/extensions"
+  :custom
+  (vertico-cycle t)
+  :custom-face
+  (vertico-current ((t (:background "#3a3f5a"))))
+  :config
+
+  ;; Prefix the current candidate with “» ”. From
+  ;; https://github.com/minad/vertico/wiki#prefix-current-candidate-with-arrow
+  (advice-add #'vertico--format-candidate :around
+	      (lambda (orig cand prefix suffix index _start)
+		(setq cand (funcall orig cand prefix suffix index _start))
+		(concat
+		 (if (= vertico--index index)
+		     (propertize "» " 'face 'vertico-current)
+		   "  ")
+		 cand)))
+
+  ;;pour activer vertico directory (remonte d'un dossier à chaque fois, pratique ! )
+  (require 'vertico-directory)
+  ;; (define-key vertico-map [remap backward-kill-word] #'vertico-directory-up)
+  ;; (define-key vertico-map [remap xah-delete-backward-char-or-bracket-text] #'vertico-directory-up)
+  (define-key vertico-map [remap open-line] #'vertico-directory-up)
+  ;; (define-key vertico-map [remap delete-backward-char] #'vertico-directory-up)
+
+  ;; pour pouvoir jump à une entrée
+  ;; (define-key vertico-map [remap avy-goto-char] #'vertico-quick-jump)
+
+  (with-eval-after-load 'avy
+
+    (defun divide-list-in-two-equal-part (lst)
+      (let ((len (length lst)))
+	(list (seq-subseq lst 0 (/ len 2))
+	      (seq-subseq lst (/ len 2)))))
+
+    (setq avy-keys-alist-two-part (divide-list-in-two-equal-part (mapconcat 'char-to-string '(?\ ?e ?u ?i ?a ?s ?t ?r ?n) "")))
+
+    ;; lorsqu'il y a une touche
+    (setq vertico-quick1 (car avy-keys-alist-two-part))
+    ;; deux touches
+    (setq vertico-quick2 (cadr avy-keys-alist-two-part))
+
+    (require 'vertico-quick)
+    (use-package vertico-quick
+      :straight nil
+      :after vertico
+      :custom (test 2)
+      :bind (:map vertico-map
+		  ("C-&lt;return&gt;" . vertico-quick-exit))))
+
+  (vertico-mode))
+
+</pre>
+</div>
+
+<p>
+(defun vertico-quick-jump ()
+        "Jump to candidate using quick keys."
+        (interactive)
+        (cond
+         ((= vertico&#x2013;total 0) (and (minibuffer-message "No match") nil))
+         ;;opti s'il y a un candidat, on le choisit 
+         ((= vertico&#x2013;total 1) (vertico-exit))
+         ;; si on est pas sur le premier candidat, en considère qu'on a bougé avec de la prévisualisation (comme consult-line), donc on exit tout de suite
+         ((not (= vertico&#x2013;index 0))
+          (vertico-exit))
+         (t (let ((idx (vertico-quick&#x2013;read)))
+              (when (consp idx) (setq idx (vertico-quick&#x2013;read (car idx))))
+              (when idx (setq vertico&#x2013;index idx))))))
+</p>
+</div>
+</div>
+<div id="outline-container-org585635f" class="outline-3">
+<h3 id="org585635f"><span class="section-number-3">8.3.</span> Marginalia</h3>
+<div class="outline-text-3" id="text-8-3">
+<p>
+Show document of function in <code>M-x</code>, or file attributes in C-x C-f
+info sur le côté du mini buffer
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">
+(use-package marginalia
+  :after vertico
+  :custom
+  (marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light nil))
+  :init
+  (marginalia-mode)
+  )
+
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgfb95701" class="outline-3">
+<h3 id="orgfb95701"><span class="section-number-3">8.4.</span> Orderless</h3>
+<div class="outline-text-3" id="text-8-4">
+<p>
+Use space-separated search terms in any order when completing with Icomplete or the default interface.
+Exemple : M-x consult-line, taper "use ordeless", et vous tomberez sur use-package orderless
+OVERCHEAT et je m'en sert tout le temps
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">
+;; Complétation par candidats      
+;; Use the `orderless' completion style.
+;; Enable `partial-completion' for files to allow path expansion.
+;; You may prefer to use `initials' instead of `partial-completion'.
+(use-package orderless
+  :init
+
+  (setq completion-styles '(orderless)
+	completion-category-defaults nil
+	completion-category-overrides '((file (styles partial-completion))))
+  :config
+
+  (setq orderless-matching-styles
+	'(
+	  orderless-regexp
+	  ;; orderless-literal
+	  orderless-initialism ;;très puissant
+	  ;; orderless-prefixes ;; utile pour les commandes de temps en temps
+	  ;; orderless-flex ;; sert à rien pour moi, donne même des candidats inutiles
+	  ;; orderless-without-literal ;; à ne pas utiliser directement
+	  ))
+
+(setq orderless-component-separator 'orderless-escapable-split-on-space)
+
+  ;;couleur avec company
+  (defun just-one-face (fn &amp;rest args)
+    (let ((orderless-match-faces [completions-common-part]))
+      (apply fn args)))
+  (advice-add 'company-capf--candidates :around #'just-one-face))
+
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc8bac7c" class="outline-2">
+<h2 id="orgc8bac7c"><span class="section-number-2">9.</span> Org-mode</h2>
+<div class="outline-text-2" id="text-9">
+</div>
+<div id="outline-container-org1b8776c" class="outline-3">
+<h3 id="org1b8776c"><span class="section-number-3">9.1.</span> Pour coder dans org (org-babel)</h3>
+<div class="outline-text-3" id="text-9-1">
+</div>
+<div id="outline-container-org47c1c73" class="outline-4">
+<h4 id="org47c1c73"><span class="section-number-4">9.1.1.</span> Template avec "&lt;" activer</h4>
+<div class="outline-text-4" id="text-9-1-1">
+<p>
+Now, you can type "&lt;el or &lt;sh" then "tab", and let's go for org-babel !
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">
+(require 'org-tempo)
+
+(add-to-list 'org-structure-template-alist '("sh" . "src sh"))
+(add-to-list 'org-structure-template-alist '("cd" . "src C"))
+(add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp\n\n"))
+(add-to-list 'org-structure-template-alist '("sc" . "src scheme"))
+(add-to-list 'org-structure-template-alist '("ts" . "src typescript"))
+(add-to-list 'org-structure-template-alist '("py" . "src python"))
+(add-to-list 'org-structure-template-alist '("yaml" . "src yaml"))
+(add-to-list 'org-structure-template-alist '("json" . "src json"))
+
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1d04c17" class="outline-4">
+<h4 id="org1d04c17"><span class="section-number-4">9.1.2.</span> Les langages chargé par org-babel</h4>
+<div class="outline-text-4" id="text-9-1-2">
+<p>
+Do not load all to booste the startup time 
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">  (org-babel-do-load-languages
+ 'org-babel-load-languages
+ '(
+   ;; (ditaa      . t)
+   (C          . t)
+   (dot        . t)
+   (emacs-lisp . t)
+   ;; (scheme     . t)
+   ;; (gnuplot    . t)
+   ;; (haskell    . t)
+   (latex      . t)
+   ;; (js         . t)
+   ;; (ledger     . t)
+   ;; (matlab     . t)
+   ;; (ocaml      . t)
+   ;; (octave     . t)
+   ;; (plantuml   . t)
+   (python     . t)
+   ;; (R          . t)
+   ;; (ruby       . t)
+   ;; (screen     . nil)
+   ;; (scheme     . t)
+   (shell      . t)
+   (sql        . t)
+   (sqlite     . t)
+   (java     . t)
+   (js . t) ;;javascripts
+   ))
+
+(setq org-babel-python-command "python3")
+
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org85e0fe2" class="outline-4">
+<h4 id="org85e0fe2"><span class="section-number-4">9.1.3.</span> Annulation de la demande de confirmation lors de la demande d'évaluation du code (babel, elisp-link, shell link)</h4>
+<div class="outline-text-4" id="text-9-1-3">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(setq org-confirm-babel-evaluate nil	  ;; for running code blocks
+      org-confirm-elisp-link-function nil ;; for elisp links
+      org-confirm-shell-link-function nil)  ;; for shell links
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orge118921" class="outline-4">
+<h4 id="orge118921"><span class="section-number-4">9.1.4.</span> Indente le code selon le language</h4>
+<div class="outline-text-4" id="text-9-1-4">
+<p>
+Dans les blocs de code, on veut la mise en évidence de syntaxe, et l'on
+utilise la touche TAB pour indenter (et non pour insérer une tabulation)
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(setq org-src-tab-acts-natively t)
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(setq org-src-fontify-natively t)
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org93d76fc" class="outline-3">
+<h3 id="org93d76fc"><span class="section-number-3">9.2.</span> Laisser une ligne vide entre les heading org-mode lors de M-RET</h3>
+<div class="outline-text-3" id="text-9-2">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(setq org-blank-before-new-entry
+      '((heading . t)
+	(plain-list-item . auto)))
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org9d46df8" class="outline-2">
+<h2 id="org9d46df8"><span class="section-number-2">10.</span> Fonction personnelle</h2>
+<div class="outline-text-2" id="text-10">
+</div>
+<div id="outline-container-org7d9f25e" class="outline-3">
+<h3 id="org7d9f25e"><span class="section-number-3">10.1.</span> Recharger la configuration d'emacs</h3>
+<div class="outline-text-3" id="text-10-1">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">
+(defun reload-configuration-of-emacs()
+  (interactive)
+  (org-babel-load-file "c:/Users/mateo/AppData/Roaming/.emacs.d/config.org"))
+
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd8c76bf" class="outline-2">
+<h2 id="orgd8c76bf"><span class="section-number-2">11.</span> Major mode</h2>
+<div class="outline-text-2" id="text-11">
+</div>
+<div id="outline-container-org8dc5dde" class="outline-3">
+<h3 id="org8dc5dde"><span class="section-number-3">11.1.</span> Codes de fonctionnement</h3>
+<div class="outline-text-3" id="text-11-1">
+<p>
+Touche de raccourcis
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">
+(defvar 
+  xah-fly-major-mode-key "i"
+  "Touche pour avoir les touches xah-fly-major-mode-map"
+  )
+
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">
+(defun xah-fly-keys-major-mode-change (&amp;rest args)
+  (let ((xah-fly-major-mode-map (intern (concat "xah-fly-" (symbol-name major-mode) "-map"))))
+    (define-key xah-fly-command-map 
+
+      ;; todo mettre (kbd (xah-fly--convert-kbd-str xah-fly-major-mode-key)) pour pas Ã  avoir Ã  la calculer Ã  chaque fois ?
+      (kbd (xah-fly--convert-kbd-str xah-fly-major-mode-key))
+
+      (if (fboundp xah-fly-major-mode-map)
+	  xah-fly-major-mode-map
+	'xah-fly-keys-no-major-mode
+	))))
+
+(defun xah-fly-keys-no-major-mode ()
+  "Function to call when there is no keymap mode to this major"
+  (interactive)
+  (message "There is no custom keymap for the major mode  %s. You can do a pull
+	  request" major-mode))
+
+(if (&gt;= emacs-major-version 28)
+    (add-to-list 'window-state-change-functions 'xah-fly-keys-major-mode-change)
+  (progn
+    (add-to-list 'window-buffer-change-functions #'xah-fly-keys-major-mode-change)
+    (add-to-list 'window-selection-change-functions #'xah-fly-keys-major-mode-change)
+    (add-hook 'window-selection-change-functions #'xah-fly-keys-major-mode-change)))
+
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc6119d6" class="outline-3">
+<h3 id="orgc6119d6"><span class="section-number-3">11.2.</span> Tables des maps</h3>
+<div class="outline-text-3" id="text-11-2">
+<p>
+Respecter le nom xah-fly-MAJORMODENAME-MODE-map
+</p>
+</div>
+
+<div id="outline-container-org5da7929" class="outline-4">
+<h4 id="org5da7929"><span class="section-number-4">11.2.1.</span> Org-mode</h4>
+<div class="outline-text-4" id="text-11-2-1">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">
+(xah-fly--define-keys
+ (define-prefix-command 'xah-fly-org-mode-map)
+ '(
+
+   ("SPC" . org-mode-babel-keymap)
+
+   ;; ("-" . "^") NOTE: this is a dead key
+   ("'" . org-table-create-or-convert-from-region)
+   ("," . org-mark-element)
+   ("." . org-todo)
+   (";" . org-toggle-narrow-to-subtree)
+   ;; ("/" . "x")
+
+   ;; ("[" . "=")
+   ;; ("]" . "%")
+
+   ;; ("=" . "Ã§")
+
+   ("a" . org-export-dispatch)
+   ;; ("b" . org-goto)
+   ("b" . consult-org-heading) ;; mieux
+   ("c" . org-insert-link)
+   ("L" . org-store-link)
+   ("d" . org-mode-keymap-movement)
+   ("e" . org-meta-return)
+   ;; ("E" . org-insert-todo-heading)
+   ("f" . org-roam-ref-add)
+   ("g" . org-roam-buffer-toggle)
+   ("h" . vulpea-insert)
+   ;; ("i" . ",")
+   ("j" . org-deadline)
+   ("k" . org-schedule)
+   ("l" . "cp-vulpea-buffer-tags-remove-BROUILLON")
+   ;; ("m" . org-insert-todo-heading)
+   ("n" . vulpea-tags-add)
+   ("o" . org-refile)
+   ("p" . org-set-tags-command)
+   ("q" . org-sort)
+   ("r" . vulpea-meta-add)
+   ("s" . citar-insert-citation)
+   ;; ("t" . vulpea-find-backlink)
+   ;; ("u" . org-capture-keymap) ;; TODO, mis dans SPC SPC
+   ;; ("u" . org-capture)  ;; TODO changer
+
+   ("v" . org-insert-todo-heading)
+   ;; ("v" . cp-vulpea-meta-fait-add)
+   ("w" . consult-org-roam-forward-links)
+   ("x" . org-time-stamp)
+   ;; ("y" . "b")
+   ;; ("z" . "v")
+   ))
+
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgebcc36c" class="outline-4">
+<h4 id="orgebcc36c"><span class="section-number-4">11.2.2.</span> C</h4>
+</div>
+
+<div id="outline-container-org5f0a404" class="outline-4">
+<h4 id="org5f0a404"><span class="section-number-4">11.2.3.</span> Etc</h4>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2023-04-14 ven. 18:36</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

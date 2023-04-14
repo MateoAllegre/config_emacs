@@ -72,8 +72,8 @@
   ;; 	  xah-fly-keys-layer-describe-variable-variable 'helpful-at-point)
 	    )
 					  ; 
-  (xah-fly-keys-layer-add-keys-to-keymap 'xah-fly-command-map "i"
-					     'avy-goto-char-2)
+  ;; (xah-fly-keys-layer-add-keys-to-keymap 'xah-fly-command-map "i"
+					     ;; 'avy-goto-char-2)
 
 (use-package which-key
     ;; :diminish which-key-mode
@@ -115,7 +115,13 @@
       (avy-goto-char-timer arg)
       (forward-char (length avy-text))))
 
+(electric-pair-mode 1)
+
 (use-package consult)
+
+(global-auto-revert-mode t)
+;; on veut plus voir quand un buffer est revert
+;; (setq auto-revert-verbose nil)
 
 (setq initial-scratch-message "Buffer scratch en org-mode !")
 
@@ -363,3 +369,85 @@
 (defun reload-configuration-of-emacs()
   (interactive)
   (org-babel-load-file "c:/Users/mateo/AppData/Roaming/.emacs.d/config.org"))
+
+(defvar 
+  xah-fly-major-mode-key "i"
+  "Touche pour avoir les touches xah-fly-major-mode-map"
+  )
+
+(defun xah-fly-keys-major-mode-change (&rest args)
+  (let ((xah-fly-major-mode-map (intern (concat "xah-fly-" (symbol-name major-mode) "-map"))))
+    (define-key xah-fly-command-map 
+
+      ;; todo mettre (kbd (xah-fly--convert-kbd-str xah-fly-major-mode-key)) pour pas Ã  avoir Ã  la calculer Ã  chaque fois ?
+      (kbd (xah-fly--convert-kbd-str xah-fly-major-mode-key))
+
+      (if (fboundp xah-fly-major-mode-map)
+          xah-fly-major-mode-map
+        'xah-fly-keys-no-major-mode
+        ))))
+
+(defun xah-fly-keys-no-major-mode ()
+  "Function to call when there is no keymap mode to this major"
+  (interactive)
+  (message "There is no custom keymap for the major mode  %s. You can do a pull
+          request" major-mode))
+
+(if (>= emacs-major-version 28)
+    (add-to-list 'window-state-change-functions 'xah-fly-keys-major-mode-change)
+  (progn
+    (add-to-list 'window-buffer-change-functions #'xah-fly-keys-major-mode-change)
+    (add-to-list 'window-selection-change-functions #'xah-fly-keys-major-mode-change)
+    (add-hook 'window-selection-change-functions #'xah-fly-keys-major-mode-change)))
+
+(xah-fly--define-keys
+ (define-prefix-command 'xah-fly-org-mode-map)
+ '(
+
+   ("SPC" . org-mode-babel-keymap)
+
+   ;; ("-" . "^") NOTE: this is a dead key
+   ("'" . org-table-create-or-convert-from-region)
+   ("," . org-mark-element)
+   ("." . org-todo)
+   (";" . org-toggle-narrow-to-subtree)
+   ;; ("/" . "x")
+
+   ;; ("[" . "=")
+   ;; ("]" . "%")
+
+   ;; ("=" . "Ã§")
+
+   ("a" . org-export-dispatch)
+   ;; ("b" . org-goto)
+   ("b" . consult-org-heading) ;; mieux
+   ("c" . org-insert-link)
+   ("L" . org-store-link)
+   ("d" . org-mode-keymap-movement)
+   ("e" . org-meta-return)
+   ;; ("E" . org-insert-todo-heading)
+   ("f" . org-roam-ref-add)
+   ("g" . org-roam-buffer-toggle)
+   ("h" . vulpea-insert)
+   ;; ("i" . ",")
+   ("j" . org-deadline)
+   ("k" . org-schedule)
+   ("l" . "cp-vulpea-buffer-tags-remove-BROUILLON")
+   ;; ("m" . org-insert-todo-heading)
+   ("n" . vulpea-tags-add)
+   ("o" . org-refile)
+   ("p" . org-set-tags-command)
+   ("q" . org-sort)
+   ("r" . vulpea-meta-add)
+   ("s" . citar-insert-citation)
+   ;; ("t" . vulpea-find-backlink)
+   ;; ("u" . org-capture-keymap) ;; TODO, mis dans SPC SPC
+   ;; ("u" . org-capture)  ;; TODO changer
+
+   ("v" . org-insert-todo-heading)
+   ;; ("v" . cp-vulpea-meta-fait-add)
+   ("w" . consult-org-roam-forward-links)
+   ("x" . org-time-stamp)
+   ;; ("y" . "b")
+   ;; ("z" . "v")
+   ))

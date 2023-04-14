@@ -107,6 +107,44 @@ keyfreq-show pour voir le nombre de commandes
 
 #+end_src
 
+** Modif touches en haut a gauche
+
+#+begin_src emacs-lisp
+
+  (define-key xah-fly-command-map (kbd (xah-fly--convert-kbd-str "'")) 'kill-word)
+
+  (define-key xah-fly-command-map (kbd (xah-fly--convert-kbd-str "p")) 'set-mark-command)
+
+  (define-key xah-fly-command-map (kbd (xah-fly--convert-kbd-str "y")) 'undo)
+
+  (define-key xah-fly-command-map (kbd (xah-fly--convert-kbd-str "f")) 'xah-pop-local-mark-ring)
+
+  (defun cp/xah-pop-global-mark-ring ()
+    "Move cursor to last mark position in another buffer."
+    (interactive)
+    (let ((current-buffer (current-buffer)))
+
+      ;; on va Ã  un autre buffer
+      (while (equal current-buffer (current-buffer))
+        (pop-global-mark))
+
+      ;; si il y a un prefix-argument, on ferme l'ancien buffer
+      (when current-prefix-arg
+        (save-window-excursion
+
+          (switch-to-buffer current-buffer)
+          (xah-close-current-buffer)
+
+          )
+        )
+
+      ;;si on n'est pas dans un buffer utile, on passe au suivant
+      (when (not (xah-user-buffer-p))
+        (xah-next-user-buffer))))
+
+  (define-key xah-fly-command-map (kbd (xah-fly--convert-kbd-str "SPC f")) 'cp/xah-pop-global-mark-ring)
+
+#+end_src
 * Voir les commandes
 #+begin_src emacs-lisp
 
@@ -160,7 +198,6 @@ keyfreq-show pour voir le nombre de commandes
       (forward-char (length avy-text))))
 
 #+end_src
-
 
 
 * fermeture automatique des parentheses

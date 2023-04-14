@@ -1,5 +1,9 @@
 ;;; -*- coding: utf-8; mode: lisp-data -*-
-(("c:/Users/mateo/Desktop/Travail/"
+(("c:/Users/mateo/AppData/Roaming/.emacs.d/"
+  (dired-filename . "c:/Users/mateo/AppData/Roaming/.emacs.d/Astuces.org"))
+ ("c:/Users/mateo/AppData/Roaming/.emacs.d/Astuces.org" . 1178)
+ ("c:/Users/mateo/AppData/Roaming/.emacs.d/config.org" . 22924)
+ ("c:/Users/mateo/Desktop/Travail/"
   (dired-filename . "c:/Users/mateo/Desktop/Travail/ZZ1 S1"))
  ("c:/Users/mateo/Desktop/Travail/ZZ1 S1/"
   (dired-filename . "c:/Users/mateo/Desktop/Travail/ZZ1 S1/C"))
@@ -12,9 +16,6 @@
   (dired-filename . "c:/Users/mateo/Desktop/emacs"))
  ("c:/Users/mateo/Desktop/emacs/"
   (dired-filename . "c:/Users/mateo/Desktop/emacs/."))
- ("c:/Users/mateo/AppData/Roaming/.emacs.d/"
-  (dired-filename . "c:/Users/mateo/AppData/Roaming/.emacs.d/config.org"))
- ("c:/Users/mateo/AppData/Roaming/.emacs.d/config.org" . 3426)
  ("c:/Users/mateo/AppData/Roaming/.emacs.d/straight/build/expand-region/expand-region-autoloads.el" . 9740)
  ("c:/Users/mateo/AppData/Roaming/.emacs.d/straight/build/xah-fly-keys-layer/xah-fly-keys-layer-autoloads.el" . 1841)
  ("c:/Users/mateo/AppData/Roaming/.emacs.d/straight/build/avy/avy-autoloads.el" . 8687)
@@ -27,7 +28,6 @@
  ("c:/Users/mateo/AppData/Roaming/"
   (dired-filename . "c:/Users/mateo/AppData/Roaming/Olympus"))
  ("c:/Users/mateo/AppData/Roaming/.emacs.d/straight/build/which-key/which-key-autoloads.el" . 7176)
- ("c:/Users/mateo/AppData/Roaming/.emacs.d/config.el" . 313)
  ("c:/Program Files/Emacs/"
   (dired-filename . "c:/Program Files/Emacs/.."))
  ("c:/Program Files/"

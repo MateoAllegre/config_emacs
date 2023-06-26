@@ -1,0 +1,62 @@
+/**
+ * @file sorting.c
+ * @brief Implementation file of sorting module
+ */
+#include <stdio.h>
+#include <stdlib.h>
+#include "sorting.h"
+#include "linkedList.h"
+
+
+/** TO DO
+ * @brief Move a cell to a different place
+ * @brief Remark : this function can be used to move some cell at the beginning of the list, with newPosition refering to the head of the list
+ * @param [in] adrCellToMove : address of the moving cell
+ * @param [in] newPosition : address of the new predecessor of the moving cell
+ */
+void moveTo(cell_t** adrCellToMove, cell_t** newPosition)
+{
+    if (*newPosition != *adrCellToMove){//test if the moving order is relevant
+        cell_t* newSuccessor = *newPosition;
+        cell_t* prevSuccessor = (*adrCellToMove)->next;
+
+        (*adrCellToMove)->next = newSuccessor;// the successor of the moving cell is updated
+        *newPosition = *adrCellToMove;// the moving cell is now the successor of newPosition
+        *adrCellToMove = prevSuccessor;// the previous predecessor of the moving cell is updated
+    }
+}
+
+
+/** TO DO
+ * @brief Find the minimum element of a list
+ * @param [in] headPtr : head of the list
+ * @return [out] the address of the pointer to the minimum cell : we return &(prec->next) where prec refers to the predecessor of the minimum
+ */
+cell_t** minimum(cell_t* headPtr)
+{
+    cell_t** adrMin = &headPtr;
+
+    //TO DO
+    //Use monom_degree_cmp to compare the degrees of two monoms (function from valCell)
+
+    return adrMin;
+}
+
+
+/** TO DO
+ * @brief One round of selection sorting
+ * @param [in,out] endSorting : address of the first cell of the list just after the sorted zone
+ */
+// oneRoundSorting()
+//{
+    // TO DO
+//}
+
+/** TO DO
+ * @brief Selection sorting of a list
+ * @param [in,out] adrHeadPtr : address of the head of the list
+ */
+//selectionSorting()
+//{
+    // TO DO
+//}

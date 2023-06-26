@@ -1,0 +1,14 @@
+import numpy as np
+import numpy.linalg as lg
+
+M = np.array([  [.4,.3],
+                [.9,.7]])
+d = np.array([.3,.7])
+d1 = np.array([.31,.7])
+print(M)
+print(d)
+
+x = lg.solve(M, d)
+x1 = lg.solve(M, d1)
+
+print(x, x1)

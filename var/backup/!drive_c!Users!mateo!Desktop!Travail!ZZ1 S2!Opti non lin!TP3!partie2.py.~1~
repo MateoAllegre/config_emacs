@@ -1,0 +1,46 @@
+import numpy as np
+import numpy.linalg as lg
+
+# Declaration de G
+n = 500
+G = np.matrix(np.zeros((n,n)))
+A = np.matrix(np.zeros((n,n)))
+
+# Lecture de webgraph.dat
+with open("webgraph.dat","r") as f:
+    for line in f:
+        split_line = line.split()
+        col = int(split_line[0]) - 1
+        row = int(split_line[1]) - 1
+        G[row, col] = 1
+
+def construit_A(d):
+    for j in range(n):
+        lj = sum(G[:,j])
+        for i in range(n):
+            if lj == 0:
+                A[i,j] = 1/n
+            else:
+                A[i,j] = d/n + G[i,j] * (1-d)/lj
+
+def puiss_iter(A, y0, eps):
+    la_anc = 1
+    la = 0
+    y = y0
+    while abs(la-la_anc) > eps:
+        la_anc = la
+        x = y / lg.norm(y)
+        y = A@x
+        #la = (x.T@y)[0,0]
+        la = float(x.T@y) / float(x.T@x)
+    return la, x
+
+print(G)
+construit_A(0.6)
+print(A)
+
+eps=1E-15 #la précision double (la précison simple =1e-7)
+x0= np.matrix(np.ones((n,1)))
+_, p = puiss_iter(A, x0, eps)
+
+print(p)

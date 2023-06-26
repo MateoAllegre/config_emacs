@@ -1,0 +1,189 @@
+from math import sqrt
+from time import time
+import matplotlib.pyplot as plt
+import numpy as np
+
+def rechDicho(f, a, b, err=1E-7):
+    xc = a + 0.5 * (b - a)
+    fc = f(xc)
+    while b - a > err:
+        xg = a + 0.25 * (b - a)
+        xd = a + 0.75 * (b - a)
+        fd = f(xd)
+        fg = f(xg)
+        if fc > fd:
+            a, xc, fc = xc, xd, fd
+        elif fc > fg:
+            b, xc, fc = xc, xg, fg
+        else:
+            a, b = xg, xd
+    return a
+
+def rech_dicho_nb_f(f, a, b, err=1E-7):
+    nb_f = 0
+    xc = a + 0.5 * (b - a)
+    fc = f(xc)
+    nb_f += 1
+    while b - a > err:
+        xg = a + 0.25 * (b - a)
+        xd = a + 0.75 * (b - a)
+        fd = f(xd)
+        fg = f(xg)
+        nb_f += 2
+        if fc > fd:
+            a, xc, fc = xc, xd, fd
+        elif fc > fg:
+            b, xc, fc = xc, xg, fg
+        else:
+            a, b = xg, xd
+    return a, nb_f
+
+def f1(x):
+    return abs(x-100)
+def f2(x):
+    return sqrt(abs(x-50))
+def f3(x):
+    return min(4*x, x+5)
+def f4(x):
+    return (-x)**3
+
+a, b = -1000, 1000
+print(f"Pour f1 : {rechDicho(f1, a, b)}")
+print(f"Pour f2 : {rechDicho(f2, a, b)}")
+print(f"Pour f3 : {rechDicho(f3, a, b)}")
+print(f"Pour f4 : {rechDicho(f4, a, b)}")
+
+##########################################################
+# PARTIE 2 : Nombre d'or                                 #
+##########################################################
+
+"""
+4) alpha = w/v donc v = w/alpha = (b-a)/alpha
+
+xg = b - v = b - (b-a)/alpha
+xd = a + v = a + (b-a)/alpha
+
+5) Par 3/2 dans les deux premiers cas ou par 3 dans le cas le plus rare
+
+6) On doit calculer f(xg) et f(xd) soit 2 appels à la fonction f
+
+7) Il faut alpha grand donc v petit donc pour réduire l'intervalle il faut que xg = xd = (a+b)/2
+Les deux points sont positionnés au milieu
+
+8) α² = w/v * v/u = w/u = (u+v)/u = v/u + 1 = α + 1
+α est le nombre d'or 1+sqrt(5)/2
+
+9) Il est divisé par phi c'est à dire multiplié par φ-1 (environ 1.618) dans les deux premiers cas de figure
+et multiplié par 2φ-3 (environ 0.236) dans le troisieme cas
+
+10) une seule sauf dans le cas 3 ou à la première itération, car on peut réutiliser le fg ou fd de l'ité prec
+"""
+
+def nombreOr(f, a, b, err=1E-7):
+    phi = (1 + sqrt(5)) / 2
+    xd = a + (b-a)/phi
+    fd = f(xd)
+    xg = b - (b-a)/phi
+    fg = f(xg)
+    while b - a > err:
+        if fg > fd:
+            a, xg, fg = xg, xd, fd
+            xd = a + (b-a)/phi
+            fd = f(xd)
+        elif fg < fd:
+            b, xd, fd = xd, xg, fg
+            xg = b - (b-a)/phi
+            fg = f(xg)
+            
+        else:
+            a, b = xg, xd
+            xg = a + (b-a)/phi
+            fg = f(xg)
+            xd = b - (b-a)/phi
+            fd = f(xd)
+    return a
+
+def nombre_or_nb_f(f, a, b, err=1E-7):
+    phi = (1 + sqrt(5)) / 2
+    nb_f = 0
+    xd = a + (b-a)/phi
+    fd = f(xd)
+    xg = b - (b-a)/phi
+    fg = f(xg)
+    nb_f += 2
+    while b - a > err:
+        if fg > fd:
+            a, xg, fg = xg, xd, fd
+            xd = a + (b-a)/phi
+            fd = f(xd)
+            nb_f += 1
+        elif fg < fd:
+            b, xd, fd = xd, xg, fg
+            xg = b - (b-a)/phi
+            fg = f(xg)
+            nb_f += 1
+        else:
+            a, b = xg, xd
+            xg = a + (b-a)/phi
+            fg = f(xg)
+            xd = b - (b-a)/phi
+            fd = f(xd)
+            nb_f += 2
+    return a, nb_f
+
+a, b = -1000, 1000
+print(f"Pour f1 : {nombreOr(f1, a, b)}")
+print(f"Pour f2 : {nombreOr(f2, a, b)}")
+print(f"Pour f3 : {nombreOr(f3, a, b)}")
+print(f"Pour f4 : {nombreOr(f4, a, b)}")
+
+##########################################################
+# PARTIE 3 : Application : Probleme d'abonnement         #
+##########################################################
+
+def cout(L, a, b):
+    def f(p):
+        return a * p + b * sqrt(sum([max(0, c-p)**2 for c in L]))
+    return f
+
+def plot_f(L, a, b, nb_pts=1000):
+    C = max(L)
+    f = np.vectorize(cout(L, a, b))
+    # ou f = cout(L, a, b)
+    
+    x = np.linspace(0, C, nb_pts)
+    y = f(x)
+    # ou y = [f(p) for p in x] si pas vectorisé
+
+    plt.title("Evolution du coût en fonction de p pour la liste donnée")
+    plt.plot(x, y)
+    plt.show()
+
+def test_function(a, b, f_to_test, nb_repetitions=100, long_liste=10):
+    random_sample = np.random.rand(nb_repetitions, long_liste) * 7500
+    total_time = 0
+    total_calls = 0
+
+    for row in random_sample:
+        f = cout(row, a, b)
+        C = max(row)
+        start_time = time()
+        _, nb_f = f_to_test(f, 0, C)
+        total_time += time() - start_time
+        total_calls += nb_f
+    
+    return total_time/nb_repetitions, total_calls/nb_repetitions
+
+L = [2500, 3500, 4380, 4389, 4725, 4800, 3700, 3500, 7000, 7500, 2000, 1200]
+a, b = 1, 0.5
+
+temps_dicho, calls_dicho = test_function(a, b, rech_dicho_nb_f)
+temps_or, calls_or = test_function(a, b, nombre_or_nb_f)
+
+print(f"La recherche dichotomique a été effectuée en moyenne en {temps_dicho} secondes.")
+print(f"La recherche dichotomique a nécessité en moyenne {calls_dicho} appels à f.")
+
+print(f"La méthode du nombre d'or a été effectuée en moyenne en {temps_or} secondes.")
+print(f"La méthode du nombre d'or a nécessité en moyenne {calls_or} appels à f.")
+
+plot_f(L, a, b)

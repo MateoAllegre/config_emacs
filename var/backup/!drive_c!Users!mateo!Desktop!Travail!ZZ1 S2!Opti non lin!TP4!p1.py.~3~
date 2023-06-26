@@ -1,0 +1,56 @@
+import numpy as np
+from math import pi, cos, sin
+import matplotlib.pyplot as plt
+
+# q2 : n = 2
+
+def quadratic(A, b, x, order=0):
+    val = 0.5 * x.T@A@x - b.T@x
+    if order == 0:
+        return val
+    else:
+        grad = A@x - b
+        if order == 1:
+            return val, grad
+        else:
+            return val, grad, A
+
+def rastrigin(x, order=0):
+    x1 = x[0]
+    x2 = x[1]
+    val = x1**2 + x2**2 - 10*cos(2*pi*x1) - 10*cos(2*pi*x2) + 20
+    if order == 0:
+        return val
+    else:
+        grad = np.array([
+            2*x1 + 20*pi*sin(2*pi*x1),
+            2*x2 + 20*pi*sin(2*pi*x2),
+        ])
+        if order == 1:
+            return val, grad
+        else:
+            hessienne = np.array([
+                [2 + 40*pi*pi*cos(2*pi*x1), 0],
+                [0, 2 + 40*pi*pi*cos(2*pi*x2)]
+            ])
+            return val, grad, hessienne
+
+def tracer(func, x1=np.arange(-5, 5.1, 0.05), x2=np.arange(-5, 5.1, 0.05), contour=False, surface = True):
+    fig, ax = plt.subplots(subplot_kw={"projection": "3d"})
+    z = func(x1, x2)
+    x1, x2 = np.meshgrid(x1, x2)
+    cont = ax.contour(x1, x2, z, 30)
+    surf = ax.plot_surface(x1, x2, z)
+
+A = np.array([[2, 0], [0, 4]])
+b = np.array([-4, -4])
+x = np.array([-1, 1])
+x2 = np.array([-1.1, 4.2])
+
+print(quadratic(A, b, x, order=2))
+
+print(rastrigin(x2, order=2))
+
+tracer(lambda x1,x2: quadratic(A, b, np.array([x1, x2])), x1=np.arange(-25, 25.1, 0.05), x2=np.arange(-25, 25.1, 0.05))
+
+plt.show()

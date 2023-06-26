@@ -1,0 +1,43 @@
+import numpy as np
+import numpy.linalg as lg
+import math
+import matplotlib.pyplot as plt
+
+def puiss_iter(A, y0, eps):
+    iter = 0
+    la_anc = 1
+    la = 0
+    y = y0
+    conv = []
+    while abs(la-la_anc) > eps:
+        la_anc = la
+        x = y / lg.norm(y)
+        y = A@x
+        #la = (x.T@y)[0,0]
+        la = float(x.T@y) / float(x.T@x)
+        conv.append(abs(la-la_anc))
+        iter += 1
+    return la, x, iter, conv
+
+def deflation(A, y0, eps):
+    eigenvalues = []
+    while len(eigenvalues) < A.shape[0]:
+        eig, v, _, _ = puiss_iter(A, y0, eps)
+        eigenvalues.append(eig)
+        A = A - eig * (v@v.T / float(v.T@v))
+    return eigenvalues
+
+A=np.matrix([[3,4,0],[1,3,0],[0,0,2]])
+eps=1E-15 #la précision double (la précison simple =1e-7)
+x0= np.matrix([2,1,1]).T
+
+la, x, iter, conv = puiss_iter(A, x0, eps)
+print(f"val propre {la} et vect propre {x}")
+
+plt.plot(conv[:-1])
+plt.yscale('log')
+plt.show()
+
+B=np.matrix([[1,2,0],[2,1,0],[0,0,2]]) #Vps : 3, 2, -1
+B_eig = deflation(B,x0,eps)
+print(B_eig)

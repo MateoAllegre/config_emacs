@@ -1,0 +1,40 @@
+/**
+ * @file sorting.h
+ * @brief Header file of sorting module
+ */
+
+#ifndef __SORTING_H__
+#define __SORTING_H__
+
+#include <stdio.h>
+#include "linkedList.h"
+
+/**
+ * @brief Move a cell to a different place
+ * @brief Remark : this function can be used to move some cell at the beginning of the list, with newPosition refering to the head of the list
+ * @param [in] adrCellToMove : address of the moving cell
+ * @param [in] newPosition : address of the new predecessor of the moving cell
+ */
+void moveTo(cell_t** adrCellToMove, cell_t** newPosition);
+
+/** TO DO
+ * @brief Find the minimum element of a list
+ * @param [in] headPtr : head of the list
+ * @return [out] the address of the pointer to the minimum cell : we return &(prec->next) where prec refers to the predecessor of the minimum
+ */
+cell_t** minimum(cell_t* headPtr);
+
+/** TO DO
+ * @brief One round of selection sorting
+ * @param [in,out] endSorting : address of the first cell of the list just after the sorted zone
+ */
+// oneRoundSorting();
+
+/** TO DO
+ * @brief Selection sorting of a list
+ * @param [in,out] adrHeadPtr : address of the head of the list
+ */
+// selectionSorting();
+
+
+#endif

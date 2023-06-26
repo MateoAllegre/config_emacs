@@ -1,0 +1,10 @@
+
+* Technical innovations in the mechanism
+
+** Explanation of the base mechanism
+
+Explain the base mechanism by showing a partially disassembled cube
+
+In the very center is a piece called the core. Six centre pieces are attached to it using screws. Because of how these pieces are physically attached to the core, they can't move in relation to one another, which means that looking at the center piece of a side when a cube is scrambled tells you what color should go on that side. In order for the cube to be flexible, the centres aren't directly screwed to the core: there's a spring in between. Flexibility is important in order to allow for corner cutting, which is what happens when you have a partially turned side and try to turn a perpendicular side. Good curner cutting is really important when turning fast, for example while executing an algorithm, which is a set of moves that you learn and that is used to solve something on the cube. Therefore, corner cutting is often one of the most important distinctions between a terrible dollar store cube and a good speedcube.
+
+Anyways, the next type of piece is called an edge piece. It has two colors and 

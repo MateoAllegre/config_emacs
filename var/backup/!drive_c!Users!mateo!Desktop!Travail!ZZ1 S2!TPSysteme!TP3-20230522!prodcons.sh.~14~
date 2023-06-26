@@ -1,0 +1,18 @@
+#!/usr/bin/bash
+nbp=4
+nbc=8
+
+tube="/tmp/tubePC"
+[ ! -e $tube ] && mkfifo $tube
+for i in $(seq 1 $nbp)
+do
+    ./producteur.sh >/tmp/tubePC 2>&1 &
+done
+
+for i in $(seq 1 $nbc)
+do
+    ./consommateur.sh >/tmp/tubePC 2>&1 &
+done
+
+echo "fini"
+rm $tube

@@ -1,0 +1,7 @@
+_Speedcubing (wieder)_
+
+Today, I will talk about speedcubing. My presentation during the first semester was already about a similar subject, but it was mostly about speedcubing as a discipline, with Events and world records. This time, I will be talking about the cube itself, more specifically, I will be talking about the technical innovations in the mechanism of the Rubik's Cube. I'll start by presenting the base mechanism of the Rubik's Cube, and then, I will list some innovations that happened throughout the years.
+
+First, let's start with how a standard Rubik's Cube works. There's a plastic piece in the middle, called the core. It sort of looks like a six-branch star, connecting to each of the six sides of the cube. Then, six center pieces are screwed to the core. These pieces only have one color, and the way they are attached to the core means that looking at the center piece of a side tells you what color belongs on that side.
+
+The way the center pieces are attached to the core is important: there's a spring in between the two pieces in order to allow for some flexibility. This flexibility is necessary for "Corner Cutting", which is what happens when you try to turn a side with another partially turned side. "Corner Cutting" is one of the most important differences between a dollar store cube and an actual speedcube. 

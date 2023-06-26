@@ -1,0 +1,27 @@
+#!/usr/bin/bash
+
+# Vérifier si un chemin de fichier est fourni en argument
+if [ $# -eq 0 ]; then
+  echo "Erreur : Aucun chemin de fichier fourni en argument."
+  exit 1
+fi
+
+# Chemin du fichier fourni en argument
+fichier=$1
+
+# Vérifier si le fichier existe
+if [ ! -f "$fichier" ]; then
+  echo "Erreur : Le fichier '$fichier' n'existe pas."
+  exit 1
+fi
+
+# Lire la première ligne du fichier
+premiere_ligne=$(head -n 1 "$fichier")
+
+# Supprimer la première ligne du fichier
+sed -i '1d' "$fichier"
+
+# Ajouter la première ligne à la fin du fichier
+echo "$premiere_ligne" >> "$fichier"
+
+echo "Ecrivain a termine."

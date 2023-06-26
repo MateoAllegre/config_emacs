@@ -1,0 +1,63 @@
+# Ce makefile est pour l'ensemble du TP
+#
+# Deux fichiers main se trouvent dans ce dossier :
+#   - linkedList_main.c pour les tests relatifs a la liste chainee
+#   - sorting_main.c pour les tests relatifs aux tris des listes chainees
+#
+# Utiliser la commande 'make linkedList' pour compiler les operations liees a la liste chainee
+# et la commande 'make sorting' pour les operations liees aux tris
+#
+
+CC = gcc               # choix du compilateur
+CFLAGS = -Wall -Wextra # options de compilation
+LDFLAGS =              # options de l'edition de lien
+
+#liste des fichiers source et objet communs
+SRC_COMMUN = teZZ.c linkedList.c valCell.c
+OBJ_COMMUN = linkedList.o valCell.o teZZt.o
+
+#liste des fichiers .c et .h pour la liste chainee
+SRC_LL = linkedList_main.c $(SRC_COMMUN)
+HEADERS_LL = teZZt.h linkedList.h valCell.h
+#liste des fichiers objets pour la liste chainee
+OBJ_LL = linkedList_main.o $(OBJ_COMMUN)
+
+#liste des fichiers .c et .h pour les operations de tris
+SRC_SORT = sorting_main.c sorting.c $(SRC_COMMUN)
+HEADERS_SORT = $(HEADERS_LL) sorting.h
+#liste des fichiers objets pour les operations de tris
+OBJ_SORT = $(OBJ_COMMUN) sorting.o sorting_main.o
+
+#all : sorting linkedList
+
+sorting: $(OBJ_SORT) $(HEADERS_SORT)
+	$(CC) $(OBJ_SORT) -o $@ $(LDFLAGS)
+
+linkedList: $(OBJ_LL) $(HEADERS_LL)
+	$(CC) $(OBJ_LL) -o $@ $(LDFLAGS)
+
+sorting_main.o: sorting_main.c $(HEADERS_SORT)
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+linkedList_main.o: linkedList_main.c $(HEADERS_LL)
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+linkedList.o: linkedList.c linkedList.h valCell.h
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+valCell.o: valCell.c valCell.h
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+sorting.o: sorting.c $(HEADERS_SORT)
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+teZZt.o: teZZt.c teZZt.h
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+.PHONY: clean reclean
+
+clean:
+	rm -f $(OBJ_SORT)
+
+reclean:
+	rm -f $(OBJ_SORT) linkedList_main.o linkedList sorting

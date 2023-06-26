@@ -72,8 +72,87 @@
   ;; 	  xah-fly-keys-layer-describe-variable-variable 'helpful-at-point)
 	    )
 					  ; 
-  ;; (xah-fly-keys-layer-add-keys-to-keymap 'xah-fly-command-map "i"
-					     ;; 'avy-goto-char-2)
+  (xah-fly-keys-layer-add-keys-to-keymap 'xah-fly-command-map "0"
+					     'avy-goto-char-2)
+
+(defvar goto-last-change-undo nil
+  "The `buffer-undo-list' entry of the previous \\[goto-last-change] command.")
+(make-variable-buffer-local 'goto-last-change-undo)
+
+(defun goto-last-change (&optional mark-point minimal-line-distance)
+    "Set point to the position of the last change.
+  Consecutive calls set point to the position of the previous change.
+  With a prefix arg (optional arg MARK-POINT non-nil), set mark so \
+  \\[exchange-point-and-mark]
+  will return point to the current position."
+    (interactive "P")
+    ;; (unless (buffer-modified-p)
+    ;;   (error "Buffer not modified"))
+    (when (eq buffer-undo-list t)
+      (error "No undo information in this buffer"))
+    (when mark-point
+      (push-mark))
+    (unless minimal-line-distance
+      (setq minimal-line-distance 10))
+    (let ((position nil)
+          (undo-list (if (and (eq this-command last-command)
+                              goto-last-change-undo)
+                         (cdr (memq goto-last-change-undo buffer-undo-list))
+                       buffer-undo-list))
+          undo)
+      (while (and undo-list
+                  (or (not position)
+                      (eql position (point))
+                      (and minimal-line-distance
+                           ;; The first invocation always goes to the last change, subsequent ones skip
+                           ;; changes closer to (point) then minimal-line-distance.
+                           (memq last-command '(goto-last-change
+                                                goto-last-change-with-auto-marks))
+                           (< (count-lines (min position (point-max)) (point))
+                              minimal-line-distance))))
+        (setq undo (car undo-list))
+        (cond ((and (consp undo) (integerp (car undo)) (integerp (cdr undo)))
+               ;; (BEG . END)
+               (setq position (cdr undo)))
+              ((and (consp undo) (stringp (car undo))) ; (TEXT . POSITION)
+               (setq position (abs (cdr undo))))
+              ((and (consp undo) (eq (car undo) t))) ; (t HIGH . LOW)
+              ((and (consp undo) (null (car undo)))
+               ;; (nil PROPERTY VALUE BEG . END)
+               (setq position (cdr (last undo))))
+              ((and (consp undo) (markerp (car undo)))) ; (MARKER . DISTANCE)
+              ((integerp undo))		; POSITION
+              ((null undo))		; nil
+              (t (error "Invalid undo entry: %s" undo)))
+        (setq undo-list (cdr undo-list)))
+      (cond (position
+             (setq goto-last-change-undo undo)
+             (goto-char (min position (point-max))))
+            ((and (eq this-command last-command)
+                  goto-last-change-undo)
+             (setq goto-last-change-undo nil)
+             (error "No further undo information"))
+            (t
+             te	   (setq goto-last-change-undo nil)
+             (error "Buffer not modified")))))
+
+(defun cp/xah-pop-local-mark-ring ()
+    "Move cursor to last mark position of current buffer.
+      Call this repeatedly will cycle all positions in `mark-ring'.
+
+      URL `http://xahlee.info/emacs/emacs/emacs_jump_to_previous_position.html'
+      Version: 2016-04-04"
+    (interactive)
+  
+    (if current-prefix-arg
+    (goto-last-change)
+      (xah-pop-local-mark-ring)))
+
+(define-key xah-fly-command-map [remap xah-pop-local-mark-ring] #'cp/xah-pop-local-mark-ring)
+
+(define-key xah-fly-command-map (kbd (xah-fly--convert-kbd-str "2")) 'universal-argument)
+
+(define-key key-translation-map (kbd "<escape>") (kbd "C-g"))
 
 (define-key xah-fly-command-map (kbd (xah-fly--convert-kbd-str "'")) 'kill-word)
 
@@ -96,10 +175,10 @@
     (when current-prefix-arg
       (save-window-excursion
 
-        (switch-to-buffer current-buffer)
-        (xah-close-current-buffer)
+	(switch-to-buffer current-buffer)
+	(xah-close-current-buffer)
 
-        )
+	)
       )
 
     ;;si on n'est pas dans un buffer utile, on passe au suivant
@@ -114,12 +193,14 @@
 (defun ma-fonction ()
   (interactive)
   (if (or buffer-read-only
-      (string-equal major-mode "minibuffer-mode")
+      (equal major-mode 'minibuffer-mode)
       ;; (string-equal major-mode "org-agenda-mode")
       ;; (string-equal major-mode "fundamental-mode")
       )
       (execute-kbd-macro (kbd "RET"))
     (open-line 1)))
+
+(define-key xah-fly-command-map [remap hippie-expand] #'dabbrev-expand)
 
 (defun xah-save-all-unsaved ()
   "Save all unsaved files. no ask.
@@ -127,9 +208,9 @@ Version 2019-11-05"
   (interactive)
   (save-some-buffers t ))
 
-(if (version< emacs-version "27")
-    (add-hook 'focus-out-hook 'xah-save-all-unsaved)
-  (setq after-focus-change-function 'xah-save-all-unsaved))
+(add-hook 'focus-out-hook 'xah-save-all-unsaved)
+
+(add-hook 'xah-fly-command-mode-activate-hook 'xah-save-all-unsaved)
 
 (use-package which-key
     ;; :diminish which-key-mode
@@ -175,10 +256,6 @@ Version 2019-11-05"
 
 (use-package consult)
 
-(global-auto-revert-mode t)
-;; on veut plus voir quand un buffer est revert
-;; (setq auto-revert-verbose nil)
-
 (setq initial-scratch-message "Buffer scratch en org-mode !")
 
 (defvaralias 'major-mode-for-buffer-scratch 'initial-major-mode)
@@ -220,13 +297,13 @@ Version 2019-11-05"
   )
 
 ;;sauvegarde à tout les changement de fenêtre
-(defun xah-save-all-unsaved (&rest args)
-  "Save all unsaved files. no ask.
-        Version 2019-11-05"
-  (interactive)
-  (unless (string-equal (file-name-extension buffer-file-name) "gpg")
-    (save-some-buffers t))
-  )
+;; (defun xah-save-all-unsaved (&rest args)
+  ;; "Save all unsaved files. no ask.
+	;; Version 2019-11-05"
+  ;; (interactive)
+  ;; (unless (string-equal (file-name-extension buffer-file-name) "gpg")
+    ;; (save-some-buffers t))
+  ;; )
 
 ;; mis dans xfk-layer
 ;; (defun cp/xah-fly-save-buffer-if-file-not-gpg ()
@@ -256,7 +333,7 @@ Version 2019-11-05"
 (setq auto-mode-alist
       (append
        (list
-        '("\\.\\(vcf\\|gpg\\)$" . sensitive-minor-mode))
+	'("\\.\\(vcf\\|gpg\\)$" . sensitive-minor-mode))
        auto-mode-alist))
 
 (fset 'yes-or-no-p 'y-or-n-p)
@@ -408,7 +485,7 @@ Version 2019-11-05"
    (js . t) ;;javascripts
    ))
 
-(setq org-babel-python-command "python3")
+(setq org-babel-python-command "python")
 
 (setq org-confirm-babel-evaluate nil	  ;; for running code blocks
       org-confirm-elisp-link-function nil ;; for elisp links
@@ -421,6 +498,8 @@ Version 2019-11-05"
 (setq org-blank-before-new-entry
       '((heading . t)
         (plain-list-item . auto)))
+
+
 
 (defun reload-configuration-of-emacs()
   (interactive)
@@ -460,7 +539,7 @@ Version 2019-11-05"
  (define-prefix-command 'xah-fly-org-mode-map)
  '(
 
-   ("SPC" . org-mode-babel-keymap)
+   ;; ("SPC" . org-mode-babel-keymap)
 
    ;; ("-" . "^") NOTE: this is a dead key
    ("'" . org-table-create-or-convert-from-region)
@@ -479,31 +558,32 @@ Version 2019-11-05"
    ("b" . consult-org-heading) ;; mieux
    ("c" . org-insert-link)
    ("L" . org-store-link)
-   ("d" . org-mode-keymap-movement)
+   ;; ("d" . org-mode-keymap-movement)
    ("e" . org-meta-return)
    ;; ("E" . org-insert-todo-heading)
-   ("f" . org-roam-ref-add)
-   ("g" . org-roam-buffer-toggle)
-   ("h" . vulpea-insert)
+   ;; ("f" . org-roam-ref-add)
+   ;; ("g" . org-roam-buffer-toggle)
+   ;; ("h" . vulpea-insert)
    ;; ("i" . ",")
-   ("j" . org-deadline)
-   ("k" . org-schedule)
+   ;; ("j" . org-deadline)
+   ;; ("k" . org-schedule)
    ("l" . "cp-vulpea-buffer-tags-remove-BROUILLON")
    ;; ("m" . org-insert-todo-heading)
-   ("n" . vulpea-tags-add)
-   ("o" . org-refile)
-   ("p" . org-set-tags-command)
+   ;; ("n" . vulpea-tags-add)
+   ("o" . org-insert-structure-template)
+
+   ;; ("p" . org-set-tags-command)
    ("q" . org-sort)
-   ("r" . vulpea-meta-add)
-   ("s" . citar-insert-citation)
+   ;; ("r" . vulpea-meta-add)
+   ;; ("s" . citar-insert-citation)
    ;; ("t" . vulpea-find-backlink)
    ;; ("u" . org-capture-keymap) ;; TODO, mis dans SPC SPC
    ;; ("u" . org-capture)  ;; TODO changer
 
    ("v" . org-insert-todo-heading)
    ;; ("v" . cp-vulpea-meta-fait-add)
-   ("w" . consult-org-roam-forward-links)
-   ("x" . org-time-stamp)
+   ;; ("w" . consult-org-roam-forward-links)
+   ;; ("x" . org-time-stamp)
    ;; ("y" . "b")
    ;; ("z" . "v")
    ))
@@ -559,3 +639,15 @@ Version 2019-11-05"
    ;; ("y" . "b")
    ;; ("z" . "v")
    ))
+
+(cd "c:/Users/mateo/Desktop/")
+
+(customize-set-variable 'use-short-answers t)
+
+(use-package embark)
+
+(use-package embark-consult)
+
+(setq python-shell-interpreter "python")
+
+(setq-default c-basic-offset 4)

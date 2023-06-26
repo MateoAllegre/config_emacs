@@ -1,0 +1,24 @@
+#!/usr/bin/bash
+# nbp=4
+# nbc=8
+
+if [ $# -ne 2 ]; then
+    echo "Mauvais nombre d'arguments, il en faut exactement deux"
+    exit 1
+fi
+
+tube="/tmp/tubePC"
+[ ! -e $tube ] && mkfifo $tube
+for i in $(seq 1 $nbp)
+do
+    ./producteur.sh 2>&1 >/tmp/tubePC &
+done
+
+for i in $(seq 1 $nbc)
+do
+    ./consommateur.sh 2>&1 </tmp/tubePC &
+done
+
+wait
+echo "fini"
+rm $tube

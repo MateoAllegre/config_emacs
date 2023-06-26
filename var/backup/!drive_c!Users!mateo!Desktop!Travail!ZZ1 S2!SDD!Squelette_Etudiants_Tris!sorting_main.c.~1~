@@ -1,0 +1,240 @@
+/**
+ * @file sorting_main.c
+ * @brief Programme pour les tests de fonctions de tris sur les listes chainees
+ */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "linkedList.h"
+#include "teZZt.h"
+#include "sorting.h"
+
+BEGIN_TEST_GROUP(sorting)
+
+TEST(monom_degree_cmp) {
+	monom_t v1 = {2.22,7};
+	monom_t v2 = {3., 5};
+	monom_t v3 = {5.25, 7};
+
+	printf("\nComparaison des monomes : \n");
+	CHECK( monom_degree_cmp(&v1, &v2) > 0 );
+	CHECK( monom_degree_cmp(&v2, &v1) < 0 );
+	CHECK( monom_degree_cmp(&v1, &v3) == 0 );
+}
+
+TEST(moveTo){
+    cell_t *poly1 = NULL;
+    cell_t *poly5 = NULL;
+
+    printf("\nFunction moveTo : \n");
+
+    FILE   *file = NULL;
+	char   buffer[1024];
+	char   buffer2[1024];
+
+	file = fmemopen(buffer, 1024, "w");
+	REQUIRE ( NULL != file );
+    LL_create_list_fromFileName(&poly1, "poly1.txt");
+    moveTo(&(poly1->next->next->next->next),&(poly1->next));
+    LL_save_list_toFile(file, &poly1, monom_save2file);
+	fclose(file);
+	//Poly 1 au départ "5.000 1\n4.000 2\n5.000 3\n6.000 4\n3.000 5\n"
+	//printf(buffer);
+	CHECK( 0 == strcmp(buffer, "5.000 1\n3.000 5\n4.000 2\n5.000 3\n6.000 4\n") );
+
+	file = fmemopen(buffer2, 1024, "w");
+	REQUIRE ( NULL != file );
+	moveTo(&poly1,&(poly1->next->next));
+	LL_save_list_toFile(file, &poly1, monom_save2file);
+	fclose(file);
+	//printf(buffer2);
+	CHECK( 0 == strcmp(buffer2, "3.000 5\n5.000 1\n4.000 2\n5.000 3\n6.000 4\n") );
+	LL_free_list(&poly1);
+
+	printf("\nFunction moveTo (liste à deux éléments) : \n");
+	LL_create_list_fromFileName(&poly5, "poly5.txt");
+	moveTo(&(poly5->next),&poly5);
+	CHECK(poly5->val.degree == 1);
+	CHECK(poly5->next->val.degree == 0);
+	LL_free_list(&poly5);
+}
+
+
+/*
+TEST(minimum){
+    cell_t *poly1 = NULL;
+    cell_t *poly2 = NULL;
+    cell_t *poly3 = NULL;
+    cell_t *poly4 = NULL;
+    cell_t *polyVide = NULL;
+
+	FILE   *file = NULL;
+	char   buffer[1024];
+	cell_t** adrMin;
+
+	printf("\nMinimum of a list : \n");
+
+	file = fmemopen(buffer, 1024, "w");
+	REQUIRE ( NULL != file );
+	LL_create_list_fromFileName(&poly1, "poly1.txt");
+	LL_save_list_toFile(file, &poly1, monom_save2file);
+	fclose(file);
+	//Test sur les fonctions createFromFile et savetoFile
+	CHECK( 0 == strcmp(buffer, "5.000 1\n4.000 2\n5.000 3\n6.000 4\n3.000 5\n") );
+
+	//Tests d'un polynome où le minimum est au tout début
+	adrMin = minimum(poly1);
+	CHECK( (*adrMin)->val.degree == 1 );
+	CHECK( (*adrMin)->val.coef == 5. );
+	CHECK( (*adrMin) == poly1 );
+	LL_free_list(&poly1);
+
+	//Tests d'un polynome où le minimum est quelque part au milieu
+	LL_create_list_fromFileName(&poly2, "poly2.txt");
+	adrMin = minimum(poly2);
+	CHECK( (*adrMin)->val.degree == 0 );
+	CHECK( (*adrMin)->val.coef == 5. );
+	CHECK( (*adrMin) != poly2 );
+	CHECK( (*adrMin) == poly2->next->next );
+	LL_free_list(&poly2);
+
+	//Tests d'un polynome où le minimum est à la fin
+	LL_create_list_fromFileName(&poly4, "poly4.txt");
+	adrMin = minimum(poly4);
+	CHECK( (*adrMin)->val.degree == 3 );
+	CHECK( (*adrMin)->val.coef == 4.6 );
+	CHECK( (*adrMin) != poly4 );
+	CHECK( (*adrMin) == poly4->next->next->next );
+	LL_free_list(&poly4);
+
+	printf("\nMinimum of a list (liste avec un élément): \n");
+	//Tests d'un polynome avec un seul monome
+	LL_create_list_fromFileName(&poly3, "poly3.txt");
+	adrMin = minimum(poly3);
+    CHECK( (*adrMin)->val.degree == 2 );
+	CHECK( (*adrMin)->val.coef == 2. );
+	CHECK( (*adrMin) == poly3 );
+	LL_free_list(&poly3);
+
+	printf("\nMinimum of a list (liste vide): \n");
+	//Tests d'un polynome vide
+	LL_create_list_fromFileName(&polyVide, "polyVide.txt");
+	adrMin = minimum(polyVide);
+	CHECK( (*adrMin) == NULL );
+	LL_free_list(&polyVide);
+}
+*/
+
+
+/*
+TEST(oneRoundSorting){
+    cell_t *poly1 = NULL;
+    cell_t *poly2 = NULL;
+    cell_t *poly3 = NULL;
+    cell_t *poly6 = NULL;
+
+    printf("\nTri par sélection - 1 round : \n");
+
+    FILE   *file = NULL;
+	char   buffer[1024];
+	char   buffer2[1024];
+	char   buffer6[1024];
+
+	file = fmemopen(buffer, 1024, "w");
+	REQUIRE ( NULL != file );
+    LL_create_list_fromFileName(&poly1, "poly1.txt");
+    oneRoundSorting(&poly1);
+    LL_save_list_toFile(file, &poly1, monom_save2file);
+	fclose(file);
+	//Poly 1 au départ "5.000 1\n4.000 2\n5.000 3\n6.000 4\n3.000 5\n"
+	//print(buffer)
+	CHECK( 0 == strcmp(buffer, "5.000 1\n4.000 2\n5.000 3\n6.000 4\n3.000 5\n") );
+
+	file = fmemopen(buffer2, 1024, "w");
+	REQUIRE ( NULL != file );
+    LL_create_list_fromFileName(&poly2, "poly2.txt");
+    oneRoundSorting(&poly2);
+    LL_save_list_toFile(file, &poly2, monom_save2file);
+	fclose(file);
+	//Poly 2 au départ "7.100 9\n40.500 4\n5.000 0\n3.002 1001\n4.000 7\n"
+	//printf(buffer2);
+	CHECK( 0 == strcmp(buffer2, "5.000 0\n7.100 9\n40.500 4\n3.002 1001\n4.000 7\n") );
+
+	file = fmemopen(buffer6, 1024, "w");
+	REQUIRE ( NULL != file );
+    LL_create_list_fromFileName(&poly6, "poly6.txt");
+    REQUIRE (poly6 != NULL);
+    oneRoundSorting(&(poly6->next));
+    LL_save_list_toFile(file, &poly6, monom_save2file);
+	fclose(file);
+	//Poly 6 au départ "5.000 1\n3.000 5\n5.000 3\n4.000 2\n6.000 4\n"
+	//printf(buffer6);
+	CHECK( 0 == strcmp(buffer6, "5.000 1\n4.000 2\n3.000 5\n5.000 3\n6.000 4\n") );
+
+	printf("\nTri par sélection - 1 round (liste à un élément): \n");
+	LL_create_list_fromFileName(&poly3, "poly3.txt");
+    oneRoundSorting(&poly3);
+    CHECK(poly3->val.degree == 2);
+    CHECK(poly3->next == NULL);
+}
+*/
+
+
+/*
+TEST(selectionSorting){
+    cell_t *poly1 = NULL;
+    cell_t *poly2 = NULL;
+    cell_t *poly3 = NULL;
+    cell_t *polyVide = NULL;
+
+	FILE   *file = NULL;
+	char   buffer[1024];
+	char   buffer2[1024];
+
+	printf("\nTri par sélection : \n");
+
+	file = fmemopen(buffer, 1024, "w");
+	REQUIRE ( NULL != file );
+
+	//Test sur une liste déjà triée
+	LL_create_list_fromFileName(&poly1, "poly1.txt");
+	selectionSorting(&poly1);
+	LL_save_list_toFile(file, &poly1, monom_save2file);
+	fclose(file);
+	//Poly 1 au départ "5.000 1\n4.000 2\n5.000 3\n6.000 4\n3.000 5\n"
+    CHECK( 0 == strcmp(buffer, "5.000 1\n4.000 2\n5.000 3\n6.000 4\n3.000 5\n") );
+	LL_free_list(&poly1);
+
+	//Test sur une liste non triée
+	file = fmemopen(buffer2, 1024, "w");
+	LL_create_list_fromFileName(&poly2, "poly2.txt");
+    selectionSorting(&poly2);
+	LL_save_list_toFile(file, &poly2, monom_save2file);
+	fclose(file);
+	//Poly 2 au départ "7.100 9\n40.500 4\n5.000 0\n3.002 1001\n4.000 7\n"
+    CHECK( 0 == strcmp(buffer2, "5.000 0\n40.500 4\n4.000 7\n7.100 9\n3.002 1001\n") );
+	LL_free_list(&poly2);
+
+	printf("\nTri par sélection (liste à un élément): \n");
+	LL_create_list_fromFileName(&poly3, "poly3.txt");
+	selectionSorting(&poly3);
+    CHECK( poly3->val.degree == 2 );
+	CHECK( poly3->val.coef == 2. );
+	CHECK( poly3->next == NULL );
+	LL_free_list(&poly3);
+
+	printf("\nTri par sélection (liste vide): \n");
+	LL_create_list_fromFileName(&polyVide, "polyVide.txt");
+	selectionSorting(&polyVide);
+	CHECK( polyVide == NULL );
+	LL_free_list(&polyVide);
+}
+*/
+
+END_TEST_GROUP(sorting)
+
+int main(void) {
+	RUN_TEST_GROUP(sorting);
+	return EXIT_SUCCESS;
+}

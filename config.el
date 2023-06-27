@@ -365,13 +365,13 @@ Version 2019-11-05"
   ;; Prefix the current candidate with “» ”. From
   ;; https://github.com/minad/vertico/wiki#prefix-current-candidate-with-arrow
   (advice-add #'vertico--format-candidate :around
-              (lambda (orig cand prefix suffix index _start)
-                (setq cand (funcall orig cand prefix suffix index _start))
-                (concat
-                 (if (= vertico--index index)
-                     (propertize "» " 'face 'vertico-current)
-                   "  ")
-                 cand)))
+	      (lambda (orig cand prefix suffix index _start)
+		(setq cand (funcall orig cand prefix suffix index _start))
+		(concat
+		 (if (= vertico--index index)
+		     (propertize "» " 'face 'vertico-current)
+		   "  ")
+		 cand)))
 
   ;;pour activer vertico directory (remonte d'un dossier à chaque fois, pratique ! )
   (require 'vertico-directory)
@@ -387,8 +387,8 @@ Version 2019-11-05"
 
     (defun divide-list-in-two-equal-part (lst)
       (let ((len (length lst)))
-        (list (seq-subseq lst 0 (/ len 2))
-              (seq-subseq lst (/ len 2)))))
+	(list (seq-subseq lst 0 (/ len 2))
+	      (seq-subseq lst (/ len 2)))))
 
     (setq avy-keys-alist-two-part (divide-list-in-two-equal-part (mapconcat 'char-to-string '(?\ ?e ?u ?i ?a ?s ?t ?r ?n) "")))
 
@@ -403,7 +403,7 @@ Version 2019-11-05"
       :after vertico
       :custom (test 2)
       :bind (:map vertico-map
-                  ("C-<return>" . vertico-quick-exit))))
+		  ("C-<return>" . vertico-quick-exit))))
 
   (vertico-mode))
 
@@ -503,7 +503,10 @@ Version 2019-11-05"
 
 (defun reload-configuration-of-emacs()
   (interactive)
-  (org-babel-load-file "c:/Users/mateo/AppData/Roaming/.emacs.d/config.org"))
+  (org-babel-load-file (if (eq system-type 'gnu/linux)
+			   "~/.emacs.d/config.org"
+			 "c:/Users/mateo/AppData/Roaming/.emacs.d/config.org"
+			 )))
 
 (defvar 
   xah-fly-major-mode-key "i"
@@ -640,7 +643,7 @@ Version 2019-11-05"
    ;; ("z" . "v")
    ))
 
-(cd "c:/Users/mateo/Desktop/")
+;; (cd "c:/Users/mateo/Desktop/")
 
 (customize-set-variable 'use-short-answers t)
 
@@ -651,3 +654,8 @@ Version 2019-11-05"
 (setq python-shell-interpreter "python")
 
 (setq-default c-basic-offset 4)
+
+(when (eq system-type 'gnu/linux)
+  (shell-command "chmod +x ~/Xmodmap && xmodmap ~/Xmodmap")
+  (shell-command "xkbcomp -w0 ~/Optimot_Linux_ISO/Optimot_Linux_ISO-ISO.xkb $DISPLAY")
+  )

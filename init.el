@@ -49,4 +49,7 @@
   (load custom-file nil 'nomessage))
 
 ;;on lance le reste
-(org-babel-load-file "c:/Users/mateo/AppData/Roaming/.emacs.d/config.org")
+(org-babel-load-file (if (eq system-type 'gnu/linux)
+			     "~/.emacs.d/config.org"
+			   "c:/Users/mateo/AppData/Roaming/.emacs.d/config.org"
+			   ))

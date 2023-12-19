@@ -655,6 +655,15 @@ Version 2019-11-05"
 
 (setq-default c-basic-offset 4)
 
+(use-package eglot
+  ;; :hook ((c-mode . eglot-ensure)
+	 ;; (c++-mode . eglot-ensure))
+  :config
+  (add-hook 'c-mode-hook 'eglot-ensure)
+  (add-hook 'c++-mode-hook 'eglot-ensure)
+
+    (add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd" "--header-insertion=never")))
+
 (when (eq system-type 'gnu/linux)
   (shell-command "chmod +x ~/Xmodmap && xmodmap ~/Xmodmap")
   (shell-command "xkbcomp -w0 ~/Optimot_Linux_ISO/Optimot_Linux_ISO-ISO.xkb $DISPLAY")

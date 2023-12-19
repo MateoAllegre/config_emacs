@@ -985,6 +985,21 @@ Respecter le nom xah-fly-MAJORMODENAME-MODE-map
 
 #+end_src
 
+** language server protocol
+
+#+begin_src emacs-lisp
+
+  (use-package eglot
+    ;; :hook ((c-mode . eglot-ensure)
+	   ;; (c++-mode . eglot-ensure))
+    :config
+    (add-hook 'c-mode-hook 'eglot-ensure)
+    (add-hook 'c++-mode-hook 'eglot-ensure)
+
+      (add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd" "--header-insertion=never")))
+
+#+end_src
+
 * Chargement du clavier Optimot et changement de la touche Caps Lock en Home
 
 #+begin_src emacs-lisp
